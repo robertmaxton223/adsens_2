@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Question for Samiya</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap');
+        
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 25%, #ffecd2 50%, #fcb69f 75%, #ff9a9e 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        html {
+            height: 100%;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            padding: 20px;
+        }
+
+        .question-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .gif-top {
+            width: 200px;
+            height: 150px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+        }
+
+        .gif-top img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .question-container {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 182, 193, 0.8));
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 40px 50px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 0 30px rgba(255, 107, 157, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: visible;
+            animation: questionBoxFloat 4s ease-in-out infinite, questionBoxGlow 3s ease-in-out infinite alternate;
+        }
+
+        .ribbon {
+            position: absolute;
+            top: -25px;
+            left: -25px;
+            font-size: 50px;
+            transform: rotate(-30deg);
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+            z-index: 10;
+            animation: ribbonSwing 3s ease-in-out infinite;
+            text-shadow: 0 0 10px rgba(255, 20, 147, 0.7);
+        }
+
+        @keyframes ribbonSwing {
+            0%, 100% { transform: rotate(-30deg) scale(1); }
+            50% { transform: rotate(-25deg) scale(1.1); }
+        }
+
+        @keyframes questionBoxFloat {
+            0%, 100% { 
+                transform: translateY(0px) scale(1);
+            }
+            50% { 
+                transform: translateY(-10px) scale(1.02);
+            }
+        }
+
+        @keyframes questionBoxGlow {
+            0% { 
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 0 30px rgba(255, 107, 157, 0.3);
+            }
+            100% { 
+                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3), 0 0 50px rgba(255, 107, 157, 0.6);
+            }
+        }
+
+        .question-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 48px;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff6b9d, #2c3e50, #ff8fab, #e74c3c);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin: 0;
+            animation: pulse 2s infinite, textColorShift 4s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes textColorShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .buttons {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 100px;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 24px;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            font-family: 'Poppins', sans-serif;
+            animation: buttonPulse 2s infinite ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes buttonPulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            }
+            50% { 
+                transform: scale(1.05);
+                box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+            }
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #ff6b9d, #ff8fab);
+            color: white;
+        }
+
+        .btn-yes:hover {
+            background: linear-gradient(135deg, #ff5a8a, #ff7a9a);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 107, 157, 0.4);
+        }
+
+        .btn-no {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+        }
+
+        .btn-no:hover {
+            background: linear-gradient(135deg, #5a9cff, #0770c7);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(116, 185, 255, 0.4);
+        }
+
+        .btn-ad {
+            background: linear-gradient(135deg, #ffd93d, #ff9a3d);
+            color: white;
+        }
+
+        .btn-ad:hover {
+            background: linear-gradient(135deg, #ffd13d, #ff8a3d);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 217, 61, 0.4);
+        }
+
+        .result-screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            height: 100%;
+            justify-content: center;
+            position: relative;
+            padding-bottom: 120px;
+        }
+
+        .gif-container {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            max-width: 400px;
+            max-height: 400px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .gif-decoration {
+            position: absolute;
+            font-size: 30px;
+            z-index: 1;
+            animation: decorationFloat 3s infinite ease-in-out;
+        }
+
+        .decoration-top-left {
+            top: -20px;
+            left: -20px;
+            animation-delay: 0s;
+        }
+
+        .decoration-top-right {
+            top: -20px;
+            right: -20px;
+            animation-delay: 0.5s;
+        }
+
+        .decoration-bottom-left {
+            bottom: -20px;
+            left: -20px;
+            animation-delay: 1s;
+        }
+
+        .decoration-bottom-right {
+            bottom: -20px;
+            right: -20px;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes decorationFloat {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-10px) scale(1.2); }
+        }
+
+        .gif-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .love-message {
+            font-family: 'Dancing Script', cursive;
+            font-size: 36px;
+            font-weight: 700;
+            color: #2c3e50;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .roses-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .firecracker {
+            position: absolute;
+            font-size: 0;
+            animation: firecrackerExplode 1.5s ease-out forwards;
+            z-index: 3;
+        }
+
+        @keyframes firecrackerExplode {
+            0% {
+                font-size: 0;
+                opacity: 1;
+                transform: translate(var(--x), var(--y)) scale(0) rotate(0deg);
+            }
+            50% {
+                font-size: var(--size);
+                opacity: 1;
+                transform: translate(var(--x), var(--y)) scale(1) rotate(180deg);
+            }
+            100% {
+                font-size: var(--size);
+                opacity: 0;
+                transform: translate(var(--x), var(--y)) scale(1.5) rotate(360deg);
+            }
+        }
+
+        .floating-heart {
+            position: absolute;
+            animation: floatUp 8s infinite ease-out;
+            filter: drop-shadow(0 0 25px rgba(139, 0, 139, 1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8b008b;
+        }
+
+        .floating-flower {
+            position: absolute;
+            animation: floatUp 8s infinite ease-out;
+            filter: drop-shadow(0 0 15px rgba(220, 20, 60, 0.8));
+            color: #dc143c;
+        }
+
+        .floating-leaf {
+            position: absolute;
+            animation: floatUp 8s infinite ease-out;
+            filter: drop-shadow(0 0 10px rgba(34, 139, 34, 0.8));
+        }
+
+        .floating-balloon {
+            position: absolute;
+            animation: floatUp 10s infinite ease-out, balloonSway 4s infinite ease-in-out;
+            filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.8));
+        }
+
+        @keyframes balloonSway {
+            0%, 100% { transform: translateX(0px); }
+            50% { transform: translateX(15px); }
+        }
+
+        .heart-letter {
+            position: absolute;
+            color: #ffffff;
+            font-weight: bold;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.9), 0 0 15px rgba(139, 0, 139, 1);
+            z-index: 3;
+            font-family: 'Dancing Script', cursive;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .heart-letter.left {
+            left: 30%;
+        }
+
+        .heart-letter.right {
+            right: 30%;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(120vh) scale(0.3);
+                opacity: 0;
+            }
+            8% {
+                opacity: 1;
+            }
+            92% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-120vh) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .angry-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .angry-emoji {
+            position: absolute;
+            font-size: 45px;
+            animation: shake 1s infinite, floatUp 8s infinite ease-out;
+            filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.7));
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        /* Ad Screen Styles */
+        .ad-screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 20px;
+        }
+
+        .ad-container {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            max-width: 90%;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ad-timer {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #ffd93d;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .ad-message {
+            font-size: 18px;
+            margin: 10px 0;
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .close-ad-btn {
+            padding: 12px 30px;
+            font-size: 18px;
+            background: linear-gradient(135deg, #ff6b9d, #ff8fab);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: none;
+            transition: all 0.3s ease;
+        }
+
+        .close-ad-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4);
+        }
+
+        /* Status Check Styles */
+        .status-container {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+
+        .status-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 12px 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(255, 107, 157, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            min-width: 140px;
+        }
+
+        .status-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .status-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ff6b9d;
+            margin-bottom: 3px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .status-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #2c3e50;
+            font-family: 'Dancing Script', cursive;
+            min-height: 20px;
+        }
+
+        .status-default {
+            color: #95a5a6;
+            font-style: italic;
+        }
+
+        .status-yes {
+            color: #ff6b9d;
+        }
+
+        .status-no {
+            color: #74b9ff;
+        }
+
+        @media (max-width: 768px) {
+            .question-text {
+                font-size: 36px;
+            }
+            
+            .btn {
+                padding: 12px 30px;
+                font-size: 20px;
+            }
+            
+            .love-message {
+                font-size: 28px;
+            }
+            
+            .gif-container {
+                max-width: 300px;
+                max-height: 300px;
+            }
+            
+            .gif-top {
+                width: 150px;
+                height: 120px;
+            }
+            
+            .ribbon {
+                font-size: 40px;
+                top: -20px;
+                left: -20px;
+            }
+            
+            .status-box {
+                padding: 10px 15px;
+                min-width: 120px;
+            }
+            
+            .status-title {
+                font-size: 12px;
+            }
+            
+            .status-value {
+                font-size: 14px;
+            }
+            
+            .buttons {
+                margin-bottom: 120px;
+            }
+            
+            .result-screen {
+                padding-bottom: 140px;
+            }
+            
+            .ad-container {
+                min-height: 250px;
+                max-width: 95%;
+            }
+            
+            .ad-timer {
+                font-size: 20px;
+            }
+            
+            .ad-message {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Question Screen -->
+    <div class="container">
+        <div class="question-screen" id="questionScreen">
+            <div class="gif-top">
+                <img src="https://i.postimg.cc/sgFRPM7p/love-ilu.gif" alt="Love GIF">
+            </div>
+            
+            <div class="question-container">
+                <div class="ribbon">🎀</div>
+                <h1 class="question-text">Samiya do you love me?</h1>
+            </div>
+            
+            <div class="buttons">
+                <button class="btn btn-yes" onclick="handleYes()">Yes ❤️</button>
+                <button class="btn btn-no" onclick="handleNo()">No 💔</button>
+                <button class="btn btn-ad" onclick="showAdScreen()">Ad View 💰</button>
+            </div>
+        </div>
+        
+        <!-- Result Screen -->
+        <div class="result-screen" id="resultScreen">
+            <div class="love-you-message" id="loveYouText" style="display: none;">
+                <h2 style="font-family: 'Dancing Script', cursive; font-size: 42px; font-weight: 700; color: #2c3e50; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); margin: 0; animation: pulse 2s infinite;">Love you too jann! 💞</h2>
+            </div>
+            
+            <div class="gif-container" id="resultGifContainer">
+                <div class="gif-decoration decoration-top-left">🎈</div>
+                <div class="gif-decoration decoration-top-right">🌼</div>
+                <div class="gif-decoration decoration-bottom-left">💖</div>
+                <div class="gif-decoration decoration-bottom-right">🎈</div>
+                <img id="resultGif" src="" alt="Result GIF" style="display: none;">
+            </div>
+            
+            <div class="love-message" id="resultMessage"></div>
+        </div>
+    </div>
+
+    <!-- Ad Screen -->
+    <div class="ad-screen" id="adScreen">
+        <h2 style="color: #ffd93d; font-family: 'Dancing Script', cursive; font-size: 36px;">Support Us by Watching Ads</h2>
+        
+        <div class="ad-message">
+            Please watch the ad for 15 seconds to continue
+        </div>
+        
+        <div class="ad-timer" id="adTimer">
+            15 seconds remaining
+        </div>
+        
+        <div class="ad-container" id="adContainer">
+            <!-- Adsense ad will be loaded here -->
+            <div style="color: black; text-align: center; padding: 20px;">
+                Loading advertisement...
+            </div>
+        </div>
+        
+        <button class="close-ad-btn" id="closeAdBtn" onclick="closeAdScreen()">
+            Continue to Site ✅
+        </button>
+    </div>
+
+    <!-- Status Check Box -->
+    <div class="status-container">
+        <div class="status-box" onclick="openStatusPage()">
+            <div class="status-title">Check Status</div>
+            <div class="status-value status-default" id="statusValue">Click to check</div>
+        </div>
+    </div>
+
+    <div class="roses-bg" id="rosesBg" style="display: none;"></div>
+    <div class="angry-bg" id="angryBg" style="display: none;"></div>
+
+    <!-- Adsense Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5761190465129752"
+     crossorigin="anonymous"></script>
+
+    <script>
+        // Variables to track animation intervals and user choice
+        let heartInterval, flowerInterval, leafInterval, balloonInterval, firecrackerInterval;
+        let userChoice = null;
+        let adTimerInterval;
+        let adSeconds = 15;
+
+        // Ad Screen Functions
+        function showAdScreen() {
+            document.getElementById('questionScreen').style.display = 'none';
+            document.getElementById('resultScreen').style.display = 'none';
+            document.getElementById('adScreen').style.display = 'flex';
+            
+            // Reset timer
+            adSeconds = 15;
+            document.getElementById('adTimer').textContent = adSeconds + ' seconds remaining';
+            document.getElementById('closeAdBtn').style.display = 'none';
+            
+            // Load Adsense ad
+            loadAdsenseAd();
+            
+            // Start timer
+            startAdTimer();
+        }
+
+        function loadAdsenseAd() {
+            const adContainer = document.getElementById('adContainer');
+            adContainer.innerHTML = `
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-5761190465129752"
+                    data-ad-slot="1234567890"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                <\/script>
+            `;
+        }
+
+        function startAdTimer() {
+            clearInterval(adTimerInterval);
+            
+            adTimerInterval = setInterval(() => {
+                adSeconds--;
+                document.getElementById('adTimer').textContent = adSeconds + ' seconds remaining';
+                
+                if (adSeconds <= 0) {
+                    clearInterval(adTimerInterval);
+                    document.getElementById('closeAdBtn').style.display = 'block';
+                    document.getElementById('adTimer').textContent = 'Ad completed! Click continue';
+                    document.getElementById('adTimer').style.color = '#4CAF50';
+                }
+            }, 1000);
+        }
+
+        function closeAdScreen() {
+            clearInterval(adTimerInterval);
+            document.getElementById('adScreen').style.display = 'none';
+            document.getElementById('questionScreen').style.display = 'flex';
+            
+            // Show success message
+            alert('Thank you for watching the ad! You can now continue using the site.');
+        }
+
+        // Save choice to localStorage
+        function saveChoice(choice) {
+            userChoice = choice;
+            localStorage.setItem('loveQuestionChoice', choice);
+            localStorage.setItem('loveQuestionTimestamp', new Date().toISOString());
+        }
+
+        // Open status page in new window
+        function openStatusPage() {
+            const statusPage = window.open('', 'statusPage', 'width=400,height=300,left=100,top=100');
+            statusPage.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Love Question Status</title>
+                    <style>
+                        body {
+                            font-family: 'Arial', sans-serif;
+                            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                            margin: 0;
+                            padding: 20px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            min-height: 100vh;
+                            color: white;
+                        }
+                        .status-container {
+                            background: rgba(255, 255, 255, 0.95);
+                            padding: 30px;
+                            border-radius: 20px;
+                            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+                            text-align: center;
+                            max-width: 350px;
+                            color: #333;
+                        }
+                        .status-title {
+                            font-size: 24px;
+                            font-weight: bold;
+                            margin-bottom: 20px;
+                            color: #667eea;
+                        }
+                        .status-result {
+                            font-size: 32px;
+                            font-weight: bold;
+                            margin: 20px 0;
+                            padding: 15px;
+                            border-radius: 10px;
+                        }
+                        .status-yes {
+                            background: #ff6b9d;
+                            color: white;
+                            animation: pulse 2s infinite;
+                        }
+                        .status-no {
+                            background: #74b9ff;
+                            color: white;
+                            animation: shake 0.5s infinite;
+                        }
+                        .status-default {
+                            background: #95a5a6;
+                            color: white;
+                        }
+                        .timestamp {
+                            font-size: 14px;
+                            color: #666;
+                            margin-top: 15px;
+                        }
+                        @keyframes pulse {
+                            0%, 100% { transform: scale(1); }
+                            50% { transform: scale(1.05); }
+                        }
+                        @keyframes shake {
+                            0%, 100% { transform: translateX(0); }
+                            25% { transform: translateX(-5px); }
+                            75% { transform: translateX(5px); }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="status-container">
+                        <div class="status-title">Love Question Status</div>
+                        <div id="statusResult" class="status-result status-default">Loading...</div>
+                        <div id="timestamp" class="timestamp"></div>
+                        <button onclick="window.close()" style="margin-top: 20px; padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer;">Close</button>
+                    </div>
+                    <script>
+                        const choice = localStorage.getItem('loveQuestionChoice');
+                        const timestamp = localStorage.getItem('loveQuestionTimestamp');
+                        const statusResult = document.getElementById('statusResult');
+                        const timestampEl = document.getElementById('timestamp');
+                        
+                        if (choice === 'yes') {
+                            statusResult.textContent = '✅ YES';
+                            statusResult.className = 'status-result status-yes';
+                        } else if (choice === 'no') {
+                            statusResult.textContent = '❌ NO';
+                            statusResult.className = 'status-result status-no';
+                        } else {
+                            statusResult.textContent = 'Not answered yet';
+                            statusResult.className = 'status-result status-default';
+                        }
+                        
+                        if (timestamp) {
+                            const date = new Date(timestamp);
+                            timestampEl.textContent = 'Answered on: ' + date.toLocaleString();
+                        }
+                    <\/script>
+                </body>
+                </html>
+            `);
+            statusPage.document.close();
+        }
+
+        function createFirecrackers() {
+            const container = document.getElementById('rosesBg');
+            const firecrackers = ['🎇', '✨', '🎆', '💫', '🌟'];
+            
+            firecrackerInterval = setInterval(() => {
+                const firecracker = document.createElement('div');
+                firecracker.className = 'firecracker';
+                
+                const x = Math.random() * 80 + 10;
+                const y = Math.random() * 80 + 10;
+                const size = Math.random() * 25 + 30;
+                const emoji = firecrackers[Math.floor(Math.random() * firecrackers.length)];
+                
+                firecracker.style.setProperty('--x', x + '%');
+                firecracker.style.setProperty('--y', y + '%');
+                firecracker.style.setProperty('--size', size + 'px');
+                firecracker.textContent = emoji;
+                
+                container.appendChild(firecracker);
+                
+                setTimeout(() => {
+                    if (firecracker.parentNode) {
+                        firecracker.parentNode.removeChild(firecracker);
+                    }
+                }, 1500);
+            }, 400);
+        }
+
+        function createFloatingHearts() {
+            const container = document.getElementById('rosesBg');
+            
+            heartInterval = setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                
+                const size = Math.random() * 15 + 25;
+                heart.style.fontSize = size + 'px';
+                heart.style.left = Math.random() * 85 + '%';
+                heart.style.animationDelay = '0s';
+                heart.style.animationDuration = (Math.random() * 3 + 7) + 's';
+                heart.innerHTML = '💖';
+                
+                const letterA = document.createElement('div');
+                letterA.className = 'heart-letter left';
+                letterA.textContent = 'A';
+                letterA.style.fontSize = (size * 0.35) + 'px';
+                
+                const letterS = document.createElement('div');
+                letterS.className = 'heart-letter right';
+                letterS.textContent = 'S';
+                letterS.style.fontSize = (size * 0.35) + 'px';
+                
+                heart.appendChild(letterA);
+                heart.appendChild(letterS);
+                container.appendChild(heart);
+                
+                setTimeout(() => {
+                    if (heart.parentNode) {
+                        heart.parentNode.removeChild(heart);
+                    }
+                }, 8000);
+            }, 800);
+        }
+
+        function createFloatingFlowers() {
+            const container = document.getElementById('rosesBg');
+            
+            flowerInterval = setInterval(() => {
+                const flower = document.createElement('div');
+                flower.className = 'floating-flower';
+                
+                const size = Math.random() * 12 + 30;
+                flower.style.fontSize = size + 'px';
+                flower.style.left = Math.random() * 85 + '%';
+                flower.style.animationDelay = '0s';
+                flower.style.animationDuration = (Math.random() * 3 + 8) + 's';
+                flower.innerHTML = '🌼';
+                
+                container.appendChild(flower);
+                
+                setTimeout(() => {
+                    if (flower.parentNode) {
+                        flower.parentNode.removeChild(flower);
+                    }
+                }, 9000);
+            }, 600);
+            
+            leafInterval = setInterval(() => {
+                const leaf = document.createElement('div');
+                leaf.className = 'floating-leaf';
+                
+                const size = Math.random() * 12 + 25;
+                leaf.style.fontSize = size + 'px';
+                leaf.style.left = Math.random() * 85 + '%';
+                leaf.style.animationDelay = '0s';
+                leaf.style.animationDuration = (Math.random() * 3 + 9) + 's';
+                leaf.innerHTML = '🍁';
+                
+                container.appendChild(leaf);
+                
+                setTimeout(() => {
+                    if (leaf.parentNode) {
+                        leaf.parentNode.removeChild(leaf);
+                    }
+                }, 10000);
+            }, 700);
+        }
+
+        function createFloatingBalloons() {
+            const container = document.getElementById('rosesBg');
+            
+            balloonInterval = setInterval(() => {
+                const balloon = document.createElement('div');
+                balloon.className = 'floating-balloon';
+                
+                const size = Math.random() * 20 + 35;
+                balloon.style.fontSize = size + 'px';
+                balloon.style.left = Math.random() * 85 + '%';
+                balloon.style.animationDelay = '0s';
+                balloon.style.animationDuration = (Math.random() * 3 + 10) + 's';
+                balloon.innerHTML = '🎈';
+                
+                container.appendChild(balloon);
+                
+                setTimeout(() => {
+                    if (balloon.parentNode) {
+                        balloon.parentNode.removeChild(balloon);
+                    }
+                }, 11000);
+            }, 1000);
+        }
+
+        function createAngryEmojis() {
+            const container = document.getElementById('angryBg');
+            const angryEmojis = ['😠', '😡', '🤬', '💢', '👿'];
+            
+            setInterval(() => {
+                const emoji = document.createElement('div');
+                emoji.className = 'angry-emoji';
+                emoji.textContent = angryEmojis[Math.floor(Math.random() * angryEmojis.length)];
+                
+                const size = Math.random() * 15 + 30;
+                emoji.style.fontSize = size + 'px';
+                emoji.style.left = Math.random() * 85 + '%';
+                emoji.style.animationDelay = '0s';
+                emoji.style.animationDuration = (Math.random() * 3 + 7) + 's';
+                
+                container.appendChild(emoji);
+                
+                setTimeout(() => {
+                    if (emoji.parentNode) {
+                        emoji.parentNode.removeChild(emoji);
+                    }
+                }, 8000);
+            }, 500);
+        }
+
+        function stopAllAnimations() {
+            if (heartInterval) clearInterval(heartInterval);
+            if (flowerInterval) clearInterval(flowerInterval);
+            if (leafInterval) clearInterval(leafInterval);
+            if (balloonInterval) clearInterval(balloonInterval);
+            if (firecrackerInterval) clearInterval(firecrackerInterval);
+            
+            const rosesBg = document.getElementById('rosesBg');
+            if (rosesBg) {
+                rosesBg.innerHTML = '';
+            }
+        }
+
+        function handleYes() {
+            saveChoice('yes');
+            
+            document.getElementById('questionScreen').style.display = 'none';
+            document.getElementById('resultScreen').style.display = 'flex';
+            document.getElementById('rosesBg').style.display = 'block';
+            document.getElementById('loveYouText').style.display = 'block';
+            
+            stopAllAnimations();
+            createFirecrackers();
+            createFloatingHearts();
+            createFloatingFlowers();
+            createFloatingBalloons();
+            
+            const resultGif = document.getElementById('resultGif');
+            const resultMessage = document.getElementById('resultMessage');
+            
+            resultGif.src = 'https://i.postimg.cc/xCjdd1KK/3fc6dc3d-e497-46d0-a40b-e6293bb9fca9.gif';
+            resultGif.style.display = 'block';
+            resultMessage.textContent = 'Yay! 🎉';
+            
+            setTimeout(() => {
+                resultGif.src = 'https://i.postimg.cc/zGBZ3HQ2/Mochi-Mochi-Peach-Cat-GIFs-Tenor.gif';
+                resultMessage.textContent = 'Forever and Always! 💕';
+            }, 2000);
+        }
+
+        function handleNo() {
+            saveChoice('no');
+            
+            document.getElementById('questionScreen').style.display = 'none';
+            document.getElementById('resultScreen').style.display = 'flex';
+            document.getElementById('angryBg').style.display = 'block';
+            document.body.style.background = 'linear-gradient(135deg, #ff6b6b 0%, #ee5a52 50%, #ff4757 100%)';
+            
+            stopAllAnimations();
+            createAngryEmojis();
+            
+            const resultGif = document.getElementById('resultGif');
+            const resultMessage = document.getElementById('resultMessage');
+            
+            resultGif.src = 'https://i.postimg.cc/bNy4F2qg/Kick-GIF-Kick-Discover-Share-GIFs.gif';
+            resultGif.style.display = 'block';
+            resultMessage.textContent = 'Ouch! That hurts! 😢';
+            resultMessage.style.color = '#fff';
+        }
+    </script>
+</body>
+</html>
