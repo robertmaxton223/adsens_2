@@ -1504,6 +1504,11 @@
             
             // লোকাল স্টোরেজ থেকে ইউজার ডেটা লোড করুন
             loadUserData();
+            
+            // রেফারেল চেক করুন (শুধু প্রথমবারের জন্য)
+            if (!localStorage.getItem('referralProcessed')) {
+                checkForReferral();
+            }
         }
         
         // ইউজার ডেটা লোকাল স্টোরেজ থেকে লোড করার ফাংশন
@@ -1615,7 +1620,14 @@
                         updateUserInterface();
                         
                         // সফলতা মেসেজ দেখান
-                        alert('রেফারেল বোনাস! আপনার অ্যাকাউন্টে ১৫০ টাকা যোগ করা হয়েছে।');
+                        setTimeout(() => {
+                            alert('রেফারেল বোনাস! আপনার অ্যাকাউন্টে ১৫০ টাকা যোগ করা হয়েছে।');
+                        }, 1000);
+                    } else {
+                        // নতুন ইউজারকে মেসেজ দেখান
+                        setTimeout(() => {
+                            alert('আপনি রেফারেল লিংক ব্যবহার করে যোগদান করেছেন! রেফারেল প্রদানকারীর অ্যাকাউন্টে ১৫০ টাকা যোগ করা হয়েছে।');
+                        }, 1000);
                     }
                 }
                 
@@ -1629,11 +1641,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             // ইউজার ইন্টারফেস আপডেট করুন
             updateUserInterface();
-            
-            // রেফারেল চেক করুন (শুধু প্রথমবারের জন্য)
-            if (!localStorage.getItem('referralProcessed')) {
-                checkForReferral();
-            }
             
             // বুঝেছি বাটন ক্লিক ইভেন্ট
             document.getElementById('understandBtn').addEventListener('click', function() {
