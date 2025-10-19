@@ -1035,6 +1035,23 @@
             transform: translateY(-3px);
         }
         
+        /* নোটিফিকেশন স্টাইল */
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(to right, #4CAF50, #45a049);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 10000;
+            font-weight: bold;
+            text-align: center;
+            animation: slideDown 0.5s ease-out;
+        }
+        
         /* অ্যানিমেশন */
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -1044,6 +1061,11 @@
         @keyframes slideUp {
             from { transform: translateY(20px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideDown {
+            from { transform: translate(-50%, -100%); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
         }
         
         @keyframes bounce {
@@ -1489,6 +1511,7 @@
         
         // Telegram Web App রেডি হলে ইউজার ডেটা লোড করুন
         tg.ready();
+        tg.expand();
         
         // Telegram থেকে ইউজার ডেটা পাওয়া গেলে
         if (tg.initDataUnsafe.user) {
@@ -1500,15 +1523,151 @@
             userData.photoUrl = tgUser.photo_url || null;
             
             // ইউনিক রেফারেল কোড তৈরি করুন
-            userData.referralCode = `ref_${userData.id}`;
+            userData.referralCode = userData.id.toString();
             
             // লোকাল স্টোরেজ থেকে ইউজার ডেটা লোড করুন
             loadUserData();
             
-            // রেফারেল চেক করুন
+            // রেফারেল চেক করুন - গুরুত্বপূর্ণ!
+            checkForReferral();
+        }
+        
+        // রেফারেল সিস্টেম - সম্পূর্ণ নতুন সংস্করণ
+        function checkForReferral() {
+            try {
+                console.log("রেফারেল চেক শুরু...");
+                
+                // URL থেকে রেফারেল প্যারামিটার চেক করুন
+                const urlParams = new URLSearchParams(window.location.search);
+                let referralId = urlParams.get('start');
+                
+                // যদি URL-এ start প্যারামিটার না থাকে, তাহলে startapp চেক করুন
+                if (!referralId) {
+                    referralId = urlParams.get('startapp');
+                }
+                
+                console.log("URL থেকে রেফারেল ID:", referralId);
+                
+                // Telegram Web App এর start_param চেক করুন
+                const tgStartParam = tg.initDataUnsafe.start_param;
+                if (tgStartParam) {
+                    referralId = tgStartParam;
+                    console.log("Telegram start_param থেকে রেফারেল ID:", referralId);
+                }
+                
+                // রেফারেল ID পাওয়া গেলে প্রসেস করুন
+                if (referralId && referralId !== userData.id.toString()) {
+                    console.log("রেফারেল পাওয়া গেছে:", referralId);
+                    
+                    // একই রেফারেল থেকে আগে বোনাস নেওয়া হয়েছে কিনা চেক করুন
+                    const referralHistory = localStorage.getItem(`ref_history_${userData.id}`) || '{}';
+                    const parsedHistory = JSON.parse(referralHistory);
+                    
+                    if (parsedHistory[referralId]) {
+                        console.log('এই রেফারেল থেকে আগেই বোনাস নেওয়া হয়েছে');
+                        return;
+                    }
+                    
+                    // রেফারেল প্রদানকারীর ডেটা লোড করুন
+                    const referrerDataStr = localStorage.getItem(`user_${referralId}`);
+                    console.log('রেফারেল প্রদানকারীর ডেটা:', referrerDataStr);
+                    
+                    if (referrerDataStr) {
+                        const referrerData = JSON.parse(referrerDataStr);
+                        
+                        // রেফারেল প্রদানকারীর ব্যালেন্স ১৫০ টাকা বাড়ান
+                        referrerData.balance = (referrerData.balance || 0) + 150;
+                        referrerData.referralCount = (referrerData.referralCount || 0) + 1;
+                        
+                        // আপডেটেড ডেটা সেভ করুন
+                        localStorage.setItem(`user_${referralId}`, JSON.stringify(referrerData));
+                        
+                        // রেফারেল হিস্ট্রি আপডেট করুন
+                        parsedHistory[referralId] = true;
+                        localStorage.setItem(`ref_history_${userData.id}`, JSON.stringify(parsedHistory));
+                        
+                        console.log('রেফারেল বোনাস দেওয়া হয়েছে:', referrerData);
+                        
+                        // নতুন ইউজারকেও জয়েন বোনাস দিন
+                        if (!localStorage.getItem(`user_${userData.id}`)) {
+                            userData.balance = 50; // জয়েন বোনাস
+                            saveUserData();
+                            
+                            // UI আপডেট করুন
+                            updateUserInterface();
+                            
+                            // সফলতা বার্তা দেখান
+                            setTimeout(() => {
+                                showNotification('🎉 রেফারেল সফল! আপনি ৫০ টাকা জয়েন বোনাস পেয়েছেন।');
+                            }, 1000);
+                        }
+                        
+                        // রেফারেল প্রদানকারী যদি বর্তমান ইউজার হন, তাহলে UI আপডেট করুন
+                        if (userData.id.toString() === referralId) {
+                            userData.balance = referrerData.balance;
+                            userData.referralCount = referrerData.referralCount;
+                            saveUserData();
+                            updateUserInterface();
+                            
+                            setTimeout(() => {
+                                showNotification('💰 রেফারেল বোনাস! আপনার অ্যাকাউন্টে ১৫০ টাকা যোগ করা হয়েছে।');
+                            }, 1500);
+                        }
+                    } else {
+                        console.log('রেফারেল প্রদানকারীর ডেটা পাওয়া যায়নি, নতুন ইউজার হিসেবে জয়েন বোনাস দিন');
+                        // নতুন ইউজার হিসেবে জয়েন বোনাস দিন
+                        if (!localStorage.getItem(`user_${userData.id}`)) {
+                            userData.balance = 50; // জয়েন বোনাস
+                            saveUserData();
+                            updateUserInterface();
+                            
+                            setTimeout(() => {
+                                showNotification('🎉 স্বাগতম! আপনি ৫০ টাকা জয়েন বোনাস পেয়েছেন।');
+                            }, 1000);
+                        }
+                    }
+                } else {
+                    console.log("কোন রেফারেল নেই, নরমাল ইউজার");
+                    // নরমাল ইউজার হিসেবে জয়েন বোনাস দিন
+                    if (!localStorage.getItem(`user_${userData.id}`)) {
+                        userData.balance = 50; // জয়েন বোনাস
+                        saveUserData();
+                        updateUserInterface();
+                        
+                        setTimeout(() => {
+                            showNotification('🎉 স্বাগতম! আপনি ৫০ টাকা জয়েন বোনাস পেয়েছেন।');
+                        }, 1000);
+                    }
+                }
+            } catch (error) {
+                console.error('রেফারেল চেক করার সময় Error:', error);
+                // error হলে অন্তত জয়েন বোনাস দিন
+                if (!localStorage.getItem(`user_${userData.id}`)) {
+                    userData.balance = 50;
+                    saveUserData();
+                    updateUserInterface();
+                }
+            }
+        }
+        
+        // নোটিফিকেশন দেখানোর ফাংশন
+        function showNotification(message) {
+            // একটি সাময়িক নোটিফিকেশন তৈরি করুন
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // 3 সেকেন্ড পর নোটিফিকেশন মুছে ফেলুন
             setTimeout(() => {
-                checkForReferral();
-            }, 1000);
+                notification.style.animation = 'slideUp 0.5s ease-in';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 500);
+            }, 3000);
         }
         
         // ইউজার ডেটা লোকাল স্টোরেজ থেকে লোড করার ফাংশন
@@ -1519,17 +1678,16 @@
                 
                 if (storedData) {
                     const parsedData = JSON.parse(storedData);
-                    userData.balance = parsedData.balance || 50;
+                    userData.balance = parsedData.balance || 0;
                     userData.referralCount = parsedData.referralCount || 0;
                 } else {
                     // নতুন ইউজারের জন্য ডিফল্ট ডেটা
-                    userData.balance = 50; // জয়েন বোনাস
+                    userData.balance = 0; // জয়েন বোনাস পরে দেওয়া হবে
                     userData.referralCount = 0;
-                    saveUserData();
                 }
             } catch (error) {
                 console.error('ডেটা লোড করার সময় Error:', error);
-                userData.balance = 50;
+                userData.balance = 0;
                 userData.referralCount = 0;
             }
         }
@@ -1542,7 +1700,8 @@
                     referralCount: userData.referralCount,
                     firstName: userData.firstName,
                     username: userData.username,
-                    id: userData.id
+                    id: userData.id,
+                    referralCode: userData.referralCode
                 };
                 localStorage.setItem(`user_${userData.id}`, JSON.stringify(dataToSave));
                 console.log('ডেটা সেভ করা হয়েছে:', dataToSave);
@@ -1590,91 +1749,16 @@
             document.getElementById('withdrawRefCount').textContent = userData.referralCount;
             document.getElementById('historyRefCount').textContent = userData.referralCount;
             
-            // রেফারেল লিংক
+            // রেফারেল লিংক - গুরুত্বপূর্ণ পরিবর্তন!
             if (userData.referralCode) {
-                const referralLink = `https://t.me/amanul_bot?start=${userData.referralCode}`;
+                // সঠিক রেফারেল লিংক ফরম্যাট
+                const referralLink = `https://t.me/amanul_bot/app?startapp=${userData.referralCode}`;
                 document.getElementById('referralLink').textContent = referralLink;
             } else {
                 document.getElementById('referralLink').textContent = 'লোড হচ্ছে...';
             }
         }
-        
-        // রেফারেল সিস্টেম - সম্পূর্ণ নতুন সংস্করণ
-        function checkForReferral() {
-            try {
-                // Telegram Web App এর start_param চেক করুন
-                const startParam = tg.initDataUnsafe.start_param;
-                
-                // URL থেকে start প্যারামিটার চেক করুন
-                const urlParams = new URLSearchParams(window.location.search);
-                const urlStartParam = urlParams.get('start');
-                
-                // কোনটি পাওয়া যায় সেটা ব্যবহার করুন
-                const referralCode = startParam || urlStartParam;
-                
-                console.log('রেফারেল কোড:', referralCode);
-                
-                if (referralCode && referralCode.startsWith('ref_')) {
-                    const referrerId = referralCode.split('_')[1];
-                    
-                    // নিজের রেফারেল লিংক ব্যবহার করলে বোনাস না দেওয়া
-                    if (referrerId === userData.id.toString()) {
-                        console.log('নিজের রেফারেল লিংক ব্যবহার করা হয়েছে');
-                        return;
-                    }
-                    
-                    // একই রেফারেল থেকে আগে বোনাস নেওয়া হয়েছে কিনা চেক করুন
-                    const referralHistory = localStorage.getItem(`ref_history_${userData.id}`) || '{}';
-                    const parsedHistory = JSON.parse(referralHistory);
-                    
-                    if (parsedHistory[referrerId]) {
-                        console.log('এই রেফারেল থেকে আগেই বোনাস নেওয়া হয়েছে');
-                        return;
-                    }
-                    
-                    // রেফারেল প্রদানকারীর ডেটা লোড করুন
-                    const referrerDataStr = localStorage.getItem(`user_${referrerId}`);
-                    console.log('রেফারেল প্রদানকারীর ডেটা:', referrerDataStr);
-                    
-                    if (referrerDataStr) {
-                        const referrerData = JSON.parse(referrerDataStr);
-                        
-                        // রেফারেল প্রদানকারীর ব্যালেন্স ১৫০ টাকা বাড়ান
-                        referrerData.balance = (referrerData.balance || 0) + 150;
-                        referrerData.referralCount = (referrerData.referralCount || 0) + 1;
-                        
-                        // আপডেটেড ডেটা সেভ করুন
-                        localStorage.setItem(`user_${referrerId}`, JSON.stringify(referrerData));
-                        
-                        // রেফারেল হিস্ট্রি আপডেট করুন
-                        parsedHistory[referrerId] = true;
-                        localStorage.setItem(`ref_history_${userData.id}`, JSON.stringify(parsedHistory));
-                        
-                        console.log('রেফারেল বোনাস দেওয়া হয়েছে:', referrerData);
-                        
-                        // যদি বর্তমান ইউজার রেফারেল প্রদানকারী হন, তাহলে UI আপডেট করুন
-                        if (userData.id.toString() === referrerId) {
-                            userData.balance = referrerData.balance;
-                            userData.referralCount = referrerData.referralCount;
-                            saveUserData();
-                            updateUserInterface();
-                            setTimeout(() => {
-                                alert('রেফারেল বোনাস! আপনার অ্যাকাউন্টে ১৫০ টাকা যোগ করা হয়েছে।');
-                            }, 500);
-                        } else {
-                            setTimeout(() => {
-                                alert('আপনি রেফারেল লিংক ব্যবহার করেছেন! রেফারেল প্রদানকারীর অ্যাকাউন্টে ১৫০ টাকা যোগ করা হয়েছে।');
-                            }, 500);
-                        }
-                    } else {
-                        console.log('রেফারেল প্রদানকারীর ডেটা পাওয়া যায়নি');
-                    }
-                }
-            } catch (error) {
-                console.error('রেফারেল চেক করার সময় Error:', error);
-            }
-        }
-        
+
         // অ্যাপ্লিকেশন ইনিশিয়ালাইজেশন
         document.addEventListener('DOMContentLoaded', function() {
             // ইউজার ইন্টারফেস আপডেট করুন
@@ -1699,7 +1783,16 @@
                 const referralLink = document.getElementById('referralLink').textContent;
                 if (referralLink !== 'লোড হচ্ছে...') {
                     navigator.clipboard.writeText(referralLink).then(function() {
-                        alert('রেফারেল লিংক কপি করা হয়েছে!');
+                        showNotification('✅ রেফারেল লিংক কপি করা হয়েছে!');
+                    }).catch(function() {
+                        // Fallback for browsers that don't support clipboard API
+                        const tempInput = document.createElement('input');
+                        tempInput.value = referralLink;
+                        document.body.appendChild(tempInput);
+                        tempInput.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(tempInput);
+                        showNotification('✅ রেফারেল লিংক কপি করা হয়েছে!');
                     });
                 }
             });
@@ -1714,7 +1807,7 @@
                 userData.balance += 20;
                 saveUserData();
                 updateUserInterface();
-                alert('বিজ্ঞাপন দেখার জন্য ধন্যবাদ! ২০ টাকা যোগ করা হয়েছে।');
+                showNotification('📺 বিজ্ঞাপন দেখার জন্য ধন্যবাদ! ২০ টাকা যোগ করা হয়েছে।');
             });
             
             // টেলিগ্রাম চ্যানেল ওপেন বাটন ফাংশন
