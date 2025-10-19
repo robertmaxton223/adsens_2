@@ -1548,21 +1548,29 @@
             
             // রেফারেল লিংক
             if (userData.referralCode) {
-                const referralLink = `https://t.me/your_bot?start=${userData.referralCode}`;
+                // আপনার বটের ইউজারনেম দিয়ে রেফারেল লিংক তৈরি করুন
+                const referralLink = `https://t.me/YourBotUsername?start=${userData.referralCode}`;
                 document.getElementById('referralLink').textContent = referralLink;
             } else {
                 document.getElementById('referralLink').textContent = 'লোড হচ্ছে...';
             }
         }
         
-        // রেফারেল সিস্টেম
+        // রেফারেল সিস্টেম - উন্নত সংস্করণ
         function checkForReferral() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const startParam = urlParams.get('start');
+            // Telegram Web App এর start_param চেক করুন
+            const startParam = tg.initDataUnsafe.start_param;
             
-            if (startParam && startParam.startsWith('ref_')) {
+            // অথবা URL থেকে start প্যারামিটার চেক করুন
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlStartParam = urlParams.get('start');
+            
+            // কোনটি পাওয়া যায় সেটা ব্যবহার করুন
+            const referralCode = startParam || urlStartParam;
+            
+            if (referralCode && referralCode.startsWith('ref_')) {
                 // রেফারেল লিংক থেকে এসেছে
-                const referredBy = startParam.split('_')[1]; // রেফারকারীর আইডি
+                const referredBy = referralCode.split('_')[1]; // রেফারকারীর আইডি
                 
                 // রেফারেল বোনাস যোগ করুন
                 userData.balance += 150;
@@ -1575,6 +1583,10 @@
                 
                 // সফলতা মেসেজ দেখান
                 alert('রেফারেল বোনাস! আপনার অ্যাকাউন্টে ১৫০ টাকা যোগ করা হয়েছে।');
+                
+                // রেফারেল কোড স্টোরেজে সংরক্ষণ করুন যাতে বারবার বোনাস না দেওয়া হয়
+                localStorage.setItem('referralProcessed', 'true');
+                localStorage.setItem('referredBy', referredBy);
             }
         }
         
@@ -1583,8 +1595,10 @@
             // ইউজার ইন্টারফেস আপডেট করুন
             updateUserInterface();
             
-            // রেফারেল চেক করুন
-            checkForReferral();
+            // রেফারেল চেক করুন (শুধু প্রথমবারের জন্য)
+            if (!localStorage.getItem('referralProcessed')) {
+                checkForReferral();
+            }
             
             // বুঝেছি বাটন ক্লিক ইভেন্ট
             document.getElementById('understandBtn').addEventListener('click', function() {
