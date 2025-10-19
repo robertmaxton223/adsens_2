@@ -1500,11 +1500,33 @@
             userData.photoUrl = tgUser.photo_url || null;
             
             // ইউনিক রেফারেল কোড তৈরি করুন
-            userData.referralCode = `ref_${tgUser.id}_${Math.random().toString(36).substr(2, 9)}`;
+            userData.referralCode = `ref_${tgUser.id}`;
             
-            // ডিফল্ট ডেটা সেট করুন
-            userData.balance = 50; // জয়েন বোনাস
-            userData.referralCount = 0; // শুরুতে রেফার সংখ্যা শূন্য
+            // লোকাল স্টোরেজ থেকে ইউজার ডেটা লোড করুন
+            loadUserData();
+        }
+        
+        // ইউজার ডেটা লোকাল স্টোরেজ থেকে লোড করার ফাংশন
+        function loadUserData() {
+            const storedData = localStorage.getItem(`user_${userData.id}`);
+            if (storedData) {
+                const parsedData = JSON.parse(storedData);
+                userData.balance = parsedData.balance || 50; // ডিফল্ট ৫০ টাকা
+                userData.referralCount = parsedData.referralCount || 0;
+            } else {
+                // নতুন ইউজারের জন্য ডিফল্ট ডেটা
+                userData.balance = 50; // জয়েন বোনাস
+                userData.referralCount = 0; // শুরুতে রেফার সংখ্যা শূন্য
+                saveUserData();
+            }
+        }
+        
+        // ইউজার ডেটা লোকাল স্টোরেজে সেভ করার ফাংশন
+        function saveUserData() {
+            localStorage.setItem(`user_${userData.id}`, JSON.stringify({
+                balance: userData.balance,
+                referralCount: userData.referralCount
+            }));
         }
         
         // ইউজার ইন্টারফেস আপডেট ফাংশন
@@ -1549,7 +1571,7 @@
             // রেফারেল লিংক
             if (userData.referralCode) {
                 // আপনার বটের ইউজারনেম দিয়ে রেফারেল লিংক তৈরি করুন
-                const referralLink = `https://t.me/amanul_bot?start=${userData.referralCode}`;
+                const referralLink = `https://t.me/YourBotUsername?start=${userData.referralCode}`;
                 document.getElementById('referralLink').textContent = referralLink;
             } else {
                 document.getElementById('referralLink').textContent = 'লোড হচ্ছে...';
@@ -1570,23 +1592,36 @@
             
             if (referralCode && referralCode.startsWith('ref_')) {
                 // রেফারেল লিংক থেকে এসেছে
-                const referredBy = referralCode.split('_')[1]; // রেফারকারীর আইডি
+                const referrerId = referralCode.split('_')[1]; // রেফারেল প্রদানকারীর আইডি
                 
-                // রেফারেল বোনাস যোগ করুন
-                userData.balance += 150;
+                // শুধুমাত্র রেফারেল প্রদানকারীর একাউন্টে টাকা যোগ করুন (নতুন ইউজারের নয়)
+                // রেফারেল প্রদানকারীর ডেটা লোকাল স্টোরেজ থেকে লোড করুন
+                const referrerData = localStorage.getItem(`user_${referrerId}`);
                 
-                // রেফারেল সংখ্যা আপডেট করুন
-                userData.referralCount++;
-                
-                // UI আপডেট করুন
-                updateUserInterface();
-                
-                // সফলতা মেসেজ দেখান
-                alert('রেফারেল বোনাস! আপনার অ্যাকাউন্টে ১৫০ টাকা যোগ করা হয়েছে।');
+                if (referrerData) {
+                    const parsedData = JSON.parse(referrerData);
+                    
+                    // রেফারেল প্রদানকারীর ব্যালেন্স ১৫০ টাকা বাড়ান
+                    parsedData.balance += 150;
+                    parsedData.referralCount += 1;
+                    
+                    // আপডেটেড ডেটা লোকাল স্টোরেজে সেভ করুন
+                    localStorage.setItem(`user_${referrerId}`, JSON.stringify(parsedData));
+                    
+                    // যদি বর্তমান ইউজার রেফারেল প্রদানকারী হন, তাহলে UI আপডেট করুন
+                    if (userData.id === referrerId) {
+                        userData.balance = parsedData.balance;
+                        userData.referralCount = parsedData.referralCount;
+                        updateUserInterface();
+                        
+                        // সফলতা মেসেজ দেখান
+                        alert('রেফারেল বোনাস! আপনার অ্যাকাউন্টে ১৫০ টাকা যোগ করা হয়েছে।');
+                    }
+                }
                 
                 // রেফারেল কোড স্টোরেজে সংরক্ষণ করুন যাতে বারবার বোনাস না দেওয়া হয়
                 localStorage.setItem('referralProcessed', 'true');
-                localStorage.setItem('referredBy', referredBy);
+                localStorage.setItem('referredBy', referrerId);
             }
         }
         
@@ -1635,6 +1670,7 @@
                 
                 // বিজ্ঞাপন দেখার পর রিওয়ার্ড যোগ করুন
                 userData.balance += 20;
+                saveUserData();
                 updateUserInterface();
                 
                 // আজকের বিজ্ঞাপন সংখ্যা আপডেট করুন
