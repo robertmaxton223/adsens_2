@@ -1,1082 +1,1654 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta name="monetag" content="535ff95528bfe30a01b60058da594ddb">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Love Question for Samiya</title>
+    <title>আয় করুন - Telegram ওয়েব অ্যাপ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap');
+        :root {
+            --primary: #0088cc;
+            --secondary: #34b7f1;
+            --accent: #ff9500;
+            --light: #f5f5f5;
+            --dark: #333333;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
         
-        body {
-            box-sizing: border-box;
+        * {
             margin: 0;
             padding: 0;
-            height: 100%;
-            font-family: 'Poppins', sans-serif;
-            overflow: hidden;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 25%, #ffecd2 50%, #fcb69f 75%, #ff9a9e 100%);
-            background-size: 400% 400%;
-            animation: gradientShift 8s ease infinite;
-            position: relative;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        
+        body {
+            background: linear-gradient(135deg, #e6f7ff, #f0f9ff);
+            color: var(--dark);
+            min-height: 100vh;
+            padding-bottom: 70px;
         }
-
-        html {
-            height: 100%;
-        }
-
+        
         .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            text-align: center;
-            position: relative;
-            z-index: 2;
+            max-width: 500px;
+            margin: 0 auto;
             padding: 20px;
         }
-
-        .question-screen {
+        
+        /* নোটিশ সেকশন */
+        .notice-container {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.8s ease-out;
+            border-left: 5px solid var(--primary);
+        }
+        
+        .notice-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .notice-icon {
+            font-size: 24px;
+            color: var(--warning);
+            margin-right: 10px;
+            animation: bounce 2s infinite;
+        }
+        
+        .notice-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .notice-content {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .welcome-text {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .bonus-list {
+            list-style-type: none;
+            margin: 15px 0;
+        }
+        
+        .bonus-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .bonus-list i {
+            color: var(--success);
+            margin-right: 10px;
+            font-size: 18px;
+            animation: pulse 2s infinite;
+        }
+        
+        .understand-btn {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 136, 204, 0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        .understand-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 136, 204, 0.4);
+            animation: none;
+        }
+        
+        /* হোম সেকশন */
+        .home-container {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 20px;
+            animation: slideUp 0.8s ease-out;
+            display: none;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .user-details {
+            flex: 1;
+        }
+        
+        .user-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .balance {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            margin: 15px 0;
+            padding: 10px;
+            background: linear-gradient(135deg, #f0f9ff, #e6f7ff);
+            border-radius: 12px;
+        }
+        
+        .stats-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            gap: 15px;
+        }
+        
+        .stat-box {
+            flex: 1;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            border: 2px solid transparent;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .stat-box:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+        
+        .stat-box.ad-box {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border-color: var(--warning);
+        }
+        
+        .stat-box.ref-box {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            border-color: var(--success);
+        }
+        
+        .stat-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .ad-box .stat-icon {
+            color: var(--warning);
+            animation: shake 2s infinite;
+        }
+        
+        .ref-box .stat-icon {
+            color: var(--success);
+            animation: tada 2s infinite;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: var(--dark);
+            font-weight: 700;
+        }
+        
+        .referral-section {
+            background: linear-gradient(135deg, #e6f7ff, #f0f9ff);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border: 2px solid var(--primary);
+            animation: fadeIn 1.2s ease-out;
+        }
+        
+        .referral-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .referral-title i {
+            margin-right: 10px;
+            font-size: 20px;
+            animation: heartBeat 2s infinite;
+        }
+        
+        .referral-desc {
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            font-weight: 700;
+        }
+        
+        .referral-link-box {
+            background-color: white;
+            border-radius: 10px;
+            padding: 12px;
+            margin: 15px 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eee;
         }
-
-        .gif-top {
-            width: 200px;
-            height: 150px;
-            border-radius: 20px;
+        
+        .referral-link {
+            font-size: 14px;
+            color: var(--dark);
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            margin-bottom: 10px;
-        }
-
-        .gif-top img {
+            text-overflow: ellipsis;
+            white-space: nowrap;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .question-container {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 182, 193, 0.8));
-            backdrop-filter: blur(10px);
-            border-radius: 30px;
-            padding: 40px 50px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 0 30px rgba(255, 107, 157, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            position: relative;
-            overflow: visible;
-            animation: questionBoxFloat 4s ease-in-out infinite, questionBoxGlow 3s ease-in-out infinite alternate;
-        }
-
-        .ribbon {
-            position: absolute;
-            top: -25px;
-            left: -25px;
-            font-size: 50px;
-            transform: rotate(-30deg);
-            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
-            z-index: 10;
-            animation: ribbonSwing 3s ease-in-out infinite;
-            text-shadow: 0 0 10px rgba(255, 20, 147, 0.7);
-        }
-
-        @keyframes ribbonSwing {
-            0%, 100% { transform: rotate(-30deg) scale(1); }
-            50% { transform: rotate(-25deg) scale(1.1); }
-        }
-
-        @keyframes questionBoxFloat {
-            0%, 100% { 
-                transform: translateY(0px) scale(1);
-            }
-            50% { 
-                transform: translateY(-10px) scale(1.02);
-            }
-        }
-
-        @keyframes questionBoxGlow {
-            0% { 
-                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 0 30px rgba(255, 107, 157, 0.3);
-            }
-            100% { 
-                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3), 0 0 50px rgba(255, 107, 157, 0.6);
-            }
-        }
-
-        .question-text {
-            font-family: 'Dancing Script', cursive;
-            font-size: 48px;
+            text-align: center;
+            margin-bottom: 10px;
+            padding: 8px;
+            background: #f9f9f9;
+            border-radius: 6px;
             font-weight: 700;
-            background: linear-gradient(45deg, #ff6b9d, #2c3e50, #ff8fab, #e74c3c);
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            margin: 0;
-            animation: pulse 2s infinite, textColorShift 4s ease-in-out infinite;
-            position: relative;
-            z-index: 2;
         }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        @keyframes textColorShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .buttons {
-            display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-bottom: 100px;
-        }
-
-        .btn {
-            padding: 15px 40px;
-            font-size: 24px;
-            font-weight: 600;
+        
+        .copy-btn {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
             border: none;
-            border-radius: 50px;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-            font-family: 'Poppins', sans-serif;
-            animation: buttonPulse 2s infinite ease-in-out;
+            width: 100%;
+        }
+        
+        .copy-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        /* টাস্ক সেকশন */
+        .task-container {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 20px;
+            animation: slideUp 0.8s ease-out;
+            display: none;
+        }
+        
+        .task-section {
+            margin-bottom: 25px;
+        }
+        
+        .task-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary);
+            text-align: center;
+        }
+        
+        .ad-task-box {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 2px solid var(--warning);
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .ad-task-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .ad-task-reward {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .ad-task-reward i {
+            color: var(--warning);
+            margin-right: 8px;
+            font-size: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        .watch-ad-btn {
+            background: linear-gradient(to right, var(--warning), #ffb74d);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .watch-ad-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 149, 0, 0.4);
+        }
+        
+        .social-task-box {
+            background: linear-gradient(135deg, #e6f7ff, #f0f9ff);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid var(--primary);
+            animation: fadeIn 1.2s ease-out;
+        }
+        
+        .social-task-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .social-icon {
+            font-size: 24px;
+            margin-right: 15px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .telegram-icon {
+            background: linear-gradient(135deg, #0088cc, #34b7f1);
+            color: white;
+            animation: bounce 2s infinite;
+        }
+        
+        .youtube-icon {
+            background: linear-gradient(135deg, #ff0000, #ff4d4d);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+        
+        .social-task-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .social-task-desc {
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .social-task-reward {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--success);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .social-task-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .open-btn {
+            flex: 1;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .claim-btn {
+            flex: 1;
+            background: linear-gradient(to right, var(--success), #66bb6a);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .claim-btn.claimed {
+            background: linear-gradient(to right, #9e9e9e, #bdbdbd);
+            cursor: not-allowed;
+        }
+        
+        .open-btn:hover, .claim-btn:hover:not(.claimed) {
+            transform: translateY(-3px);
+        }
+        
+        .message-box {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 700;
+            display: none;
+        }
+        
+        .success-message {
+            background-color: #e8f5e9;
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+        
+        .error-message {
+            background-color: #ffebee;
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+        
+        .checking-message {
+            background-color: #e3f2fd;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+        
+        /* সাপোর্ট সেকশন */
+        .support-container {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.8s ease-out;
+            display: none;
+        }
+        
+        .tutorial-box {
+            background: linear-gradient(135deg, #e6f7ff, #f0f9ff);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 2px solid var(--primary);
             position: relative;
             overflow: hidden;
         }
-
-        @keyframes buttonPulse {
-            0%, 100% { 
-                transform: scale(1);
-                box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-            }
-            50% { 
-                transform: scale(1.05);
-                box-shadow: 0 12px 35px rgba(0,0,0,0.3);
-            }
-        }
-
-        .btn::before {
+        
+        .tutorial-box::before {
             content: '';
             position: absolute;
             top: 0;
-            left: -100%;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, #ff0000, #ff4d4d);
+        }
+        
+        .tutorial-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .video-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff0000, #ff4d4d);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+            position: relative;
+            animation: videoPulse 2s infinite;
+        }
+        
+        .video-icon::before {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border: 2px solid rgba(255, 0, 0, 0.3);
+            border-radius: 50%;
+            animation: videoRipple 2s infinite;
+        }
+        
+        .video-icon i {
+            margin-left: 3px;
+        }
+        
+        .tutorial-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .tutorial-desc {
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            font-weight: 700;
+        }
+        
+        .tutorial-btn {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 25px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .tutorial-btn i {
+            margin-right: 8px;
+        }
+        
+        .tutorial-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 136, 204, 0.4);
+        }
+        
+        /* উইথড্র সেকশন */
+        .withdraw-container {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 20px;
+            animation: slideUp 0.8s ease-out;
+            display: none;
+        }
+        
+        .withdraw-box {
+            background: linear-gradient(135deg, #e6f7ff, #f0f9ff);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px solid var(--primary);
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .withdraw-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--primary);
+            text-align: center;
+        }
+        
+        .withdraw-notice {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid var(--warning);
+        }
+        
+        .withdraw-notice-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+        
+        .withdraw-notice-text {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .form-select, .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-select:focus, .form-input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 136, 204, 0.1);
+        }
+        
+        .submit-btn {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 136, 204, 0.4);
+        }
+        
+        /* হিস্ট্রি সেকশন */
+        .history-container {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 20px;
+            animation: slideUp 0.8s ease-out;
+            display: none;
+        }
+        
+        .history-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-align: center;
+        }
+        
+        .history-record {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .history-record:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .history-record-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .history-method {
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .history-status {
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        
+        .status-pending {
+            background-color: #fff3e0;
+            color: var(--warning);
+        }
+        
+        .status-success {
+            background-color: #e8f5e9;
+            color: var(--success);
+        }
+        
+        .history-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .history-detail {
+            font-size: 14px;
+        }
+        
+        .history-detail-label {
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .admin-icon {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            animation: pulse 2s infinite;
+        }
+        
+        .admin-login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
         }
-
-        .btn:hover::before {
-            left: 100%;
+        
+        .admin-login-box {
+            background-color: white;
+            border-radius: 16px;
+            padding: 25px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.5s ease-out;
+            position: relative;
         }
-
-        .btn-yes {
-            background: linear-gradient(135deg, #ff6b9d, #ff8fab);
-            color: white;
+        
+        .admin-login-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary);
+            text-align: center;
         }
-
-        .btn-yes:hover {
-            background: linear-gradient(135deg, #ff5a8a, #ff7a9a);
-            transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(255, 107, 157, 0.4);
+        
+        .admin-login-desc {
+            font-size: 14px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--dark);
         }
-
-        .btn-no {
-            background: linear-gradient(135deg, #74b9ff, #0984e3);
-            color: white;
+        
+        .admin-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--dark);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
         }
-
-        .btn-no:hover {
-            background: linear-gradient(135deg, #5a9cff, #0770c7);
-            transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(116, 185, 255, 0.4);
+        
+        .admin-close:hover {
+            background-color: #f0f0f0;
+            transform: rotate(90deg);
         }
-
-        .btn-ad {
-            background: linear-gradient(135deg, #ffd93d, #ff9a3d);
-            color: white;
-        }
-
-        .btn-ad:hover {
-            background: linear-gradient(135deg, #ffd13d, #ff8a3d);
-            transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(255, 217, 61, 0.4);
-        }
-
-        .result-screen {
+        
+        .admin-panel {
             display: none;
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .admin-request {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-request:hover {
+            border-color: var(--primary);
+        }
+        
+        .admin-user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .admin-user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .admin-user-details {
+            flex: 1;
+        }
+        
+        .admin-user-name {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+        
+        .admin-user-username {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .admin-request-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .admin-request-detail {
+            font-size: 14px;
+        }
+        
+        .admin-request-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .admin-decline-btn {
+            flex: 1;
+            background: linear-gradient(to right, var(--danger), #ef5350);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-approve-btn {
+            flex: 1;
+            background: linear-gradient(to right, var(--success), #66bb6a);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-decline-btn:hover, .admin-approve-btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        .no-history {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-weight: 700;
+        }
+        
+        /* ফুটার নেভিগেশন */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--card-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+        
+        .nav-item {
+            display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 30px;
-            height: 100%;
-            justify-content: center;
-            position: relative;
-            padding-bottom: 120px;
-        }
-
-        .gif-container {
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-            max-width: 400px;
-            max-height: 400px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .gif-decoration {
-            position: absolute;
-            font-size: 30px;
-            z-index: 1;
-            animation: decorationFloat 3s infinite ease-in-out;
-        }
-
-        .decoration-top-left {
-            top: -20px;
-            left: -20px;
-            animation-delay: 0s;
-        }
-
-        .decoration-top-right {
-            top: -20px;
-            right: -20px;
-            animation-delay: 0.5s;
-        }
-
-        .decoration-bottom-left {
-            bottom: -20px;
-            left: -20px;
-            animation-delay: 1s;
-        }
-
-        .decoration-bottom-right {
-            bottom: -20px;
-            right: -20px;
-            animation-delay: 1.5s;
-        }
-
-        @keyframes decorationFloat {
-            0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-10px) scale(1.2); }
-        }
-
-        .gif-container img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .love-message {
-            font-family: 'Dancing Script', cursive;
-            font-size: 36px;
+            text-decoration: none;
+            color: var(--dark);
+            font-size: 12px;
+            transition: all 0.3s ease;
             font-weight: 700;
-            color: #2c3e50;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            animation: bounce 2s infinite;
         }
-
+        
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+        
+        .nav-item.active {
+            color: var(--primary);
+        }
+        
+        .nav-item:hover {
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        /* অ্যানিমেশন */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
             40% { transform: translateY(-10px); }
             60% { transform: translateY(-5px); }
         }
-
-        .roses-bg {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
-
-        .firecracker {
-            position: absolute;
-            font-size: 0;
-            animation: firecrackerExplode 1.5s ease-out forwards;
-            z-index: 3;
-        }
-
-        @keyframes firecrackerExplode {
-            0% {
-                font-size: 0;
-                opacity: 1;
-                transform: translate(var(--x), var(--y)) scale(0) rotate(0deg);
-            }
-            50% {
-                font-size: var(--size);
-                opacity: 1;
-                transform: translate(var(--x), var(--y)) scale(1) rotate(180deg);
-            }
-            100% {
-                font-size: var(--size);
-                opacity: 0;
-                transform: translate(var(--x), var(--y)) scale(1.5) rotate(360deg);
-            }
-        }
-
-        .floating-heart {
-            position: absolute;
-            animation: floatUp 8s infinite ease-out;
-            filter: drop-shadow(0 0 25px rgba(139, 0, 139, 1));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #8b008b;
-        }
-
-        .floating-flower {
-            position: absolute;
-            animation: floatUp 8s infinite ease-out;
-            filter: drop-shadow(0 0 15px rgba(220, 20, 60, 0.8));
-            color: #dc143c;
-        }
-
-        .floating-leaf {
-            position: absolute;
-            animation: floatUp 8s infinite ease-out;
-            filter: drop-shadow(0 0 10px rgba(34, 139, 34, 0.8));
-        }
-
-        .floating-balloon {
-            position: absolute;
-            animation: floatUp 10s infinite ease-out, balloonSway 4s infinite ease-in-out;
-            filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.8));
-        }
-
-        @keyframes balloonSway {
-            0%, 100% { transform: translateX(0px); }
-            50% { transform: translateX(15px); }
-        }
-
-        .heart-letter {
-            position: absolute;
-            color: #ffffff;
-            font-weight: bold;
-            text-shadow: 2px 2px 6px rgba(0,0,0,0.9), 0 0 15px rgba(139, 0, 139, 1);
-            z-index: 3;
-            font-family: 'Dancing Script', cursive;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .heart-letter.left {
-            left: 30%;
-        }
-
-        .heart-letter.right {
-            right: 30%;
-        }
-
-        @keyframes floatUp {
-            0% {
-                transform: translateY(120vh) scale(0.3);
-                opacity: 0;
-            }
-            8% {
-                opacity: 1;
-            }
-            92% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-120vh) scale(1.5);
-                opacity: 0;
-            }
-        }
-
-        .angry-bg {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .angry-emoji {
-            position: absolute;
-            font-size: 45px;
-            animation: shake 1s infinite, floatUp 8s infinite ease-out;
-            filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.7));
-        }
-
+        
         @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-8px); }
-            75% { transform: translateX(8px); }
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
         }
-
-        /* Ad Screen Styles */
-        .ad-screen {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            text-align: center;
-            position: relative;
-            z-index: 100;
-            background: rgba(0, 0, 0, 0.9);
-            color: white;
-            padding: 20px;
+        
+        @keyframes tada {
+            0% { transform: scale(1); }
+            10%, 20% { transform: scale(0.9) rotate(-3deg); }
+            30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); }
+            40%, 60%, 80% { transform: scale(1.1) rotate(-3deg); }
+            100% { transform: scale(1) rotate(0); }
         }
-
-        .ad-container {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-            max-width: 90%;
-            min-height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.3); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.3); }
+            70% { transform: scale(1); }
         }
-
-        .ad-timer {
-            font-size: 24px;
-            font-weight: bold;
-            margin: 20px 0;
-            color: #ffd93d;
-            font-family: 'Poppins', sans-serif;
+        
+        @keyframes videoPulse {
+            0% { transform: scale(1); box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3); }
+            50% { transform: scale(1.1); box-shadow: 0 6px 16px rgba(255, 0, 0, 0.5); }
+            100% { transform: scale(1); box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3); }
         }
-
-        .ad-message {
-            font-size: 18px;
-            margin: 10px 0;
-            color: #ffffff;
-            font-family: 'Poppins', sans-serif;
+        
+        @keyframes videoRipple {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.3); opacity: 0; }
         }
-
-        .close-ad-btn {
-            padding: 12px 30px;
-            font-size: 18px;
-            background: linear-gradient(135deg, #ff6b9d, #ff8fab);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            margin-top: 20px;
-            display: none;
-            transition: all 0.3s ease;
-        }
-
-        .close-ad-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4);
-        }
-
-        /* Status Check Styles */
-        .status-container {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-        }
-
-        .status-box {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 12px 20px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-            border: 2px solid rgba(255, 107, 157, 0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            min-width: 140px;
-        }
-
-        .status-box:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-            background: rgba(255, 255, 255, 1);
-        }
-
-        .status-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: #ff6b9d;
-            margin-bottom: 3px;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .status-value {
-            font-size: 16px;
-            font-weight: 700;
-            color: #2c3e50;
-            font-family: 'Dancing Script', cursive;
-            min-height: 20px;
-        }
-
-        .status-default {
-            color: #95a5a6;
-            font-style: italic;
-        }
-
-        .status-yes {
-            color: #ff6b9d;
-        }
-
-        .status-no {
-            color: #74b9ff;
-        }
-
-        @media (max-width: 768px) {
-            .question-text {
-                font-size: 36px;
+        
+        /* রেস্পন্সিভ */
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
             }
             
-            .btn {
-                padding: 12px 30px;
-                font-size: 20px;
+            .stats-container {
+                flex-direction: column;
             }
             
-            .love-message {
-                font-size: 28px;
+            .social-task-buttons {
+                flex-direction: column;
             }
             
-            .gif-container {
-                max-width: 300px;
-                max-height: 300px;
+            .history-details, .admin-request-details {
+                grid-template-columns: 1fr;
             }
             
-            .gif-top {
-                width: 150px;
-                height: 120px;
+            .tutorial-header {
+                flex-direction: column;
+                text-align: center;
             }
             
-            .ribbon {
-                font-size: 40px;
-                top: -20px;
-                left: -20px;
-            }
-            
-            .status-box {
-                padding: 10px 15px;
-                min-width: 120px;
-            }
-            
-            .status-title {
-                font-size: 12px;
-            }
-            
-            .status-value {
-                font-size: 14px;
-            }
-            
-            .buttons {
-                margin-bottom: 120px;
-            }
-            
-            .result-screen {
-                padding-bottom: 140px;
-            }
-            
-            .ad-container {
-                min-height: 250px;
-                max-width: 95%;
-            }
-            
-            .ad-timer {
-                font-size: 20px;
-            }
-            
-            .ad-message {
-                font-size: 16px;
+            .video-icon {
+                margin-right: 0;
+                margin-bottom: 10px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Main Question Screen -->
     <div class="container">
-        <div class="question-screen" id="questionScreen">
-            <div class="gif-top">
-                <img src="https://i.postimg.cc/sgFRPM7p/love-ilu.gif" alt="Love GIF">
+        <!-- নোটিশ সেকশন -->
+        <div class="notice-container" id="noticeSection">
+            <div class="notice-header">
+                <div class="notice-icon">📢</div>
+                <div class="notice-title">নোটিস</div>
+            </div>
+            <div class="notice-content">
+                <div class="welcome-text">স্বাগতম!</div>
+                <p>আসসালামু আলাইকুম, সততার সাথে পেমেন্ট করছি। নিয়ম মেনে কাজ করলে ১০০% পেমেন্ট পাবেন ইনশাআল্লাহ</p>
+                
+                <ul class="bonus-list">
+                    <li><i class="fas fa-gift"></i> জয়েন বোনাস: ৫০ টাকা</li>
+                    <li><i class="fas fa-user-friends"></i> প্রতি রেফারে: ১৫০ টাকা</li>
+                    <li><i class="fas fa-ad"></i> প্রতি বিজ্ঞাপনে: ২০ টাকা</li>
+                    <li><i class="fas fa-calendar-day"></i> প্রতিদিন বিজ্ঞাপন দেখার সুযোগ</li>
+                </ul>
+                
+                <p>এই সাইটে কোন ইনভেস্ট করতে হবে না সম্পূর্ণ ফ্রিতে ইনকাম করতে পারবেন। ধন্যবাদ।</p>
+            </div>
+            <button class="understand-btn" id="understandBtn">বুঝেছি</button>
+        </div>
+        
+        <!-- হোম সেকশন -->
+        <div class="home-container" id="homeSection">
+            <div class="user-info">
+                <div class="user-avatar">U</div>
+                <div class="user-details">
+                    <div class="user-name">ইউজারের নাম</div>
+                    <div>Telegram একাউন্ট</div>
+                </div>
             </div>
             
-            <div class="question-container">
-                <div class="ribbon">🎀</div>
-                <h1 class="question-text">Samiya do you love me?</h1>
+            <div class="balance">
+                মোট আয়: ৫০ টাকা
             </div>
             
-            <div class="buttons">
-                <button class="btn btn-yes" onclick="handleYes()">Yes ❤️</button>
-                <button class="btn btn-no" onclick="handleNo()">No 💔</button>
-                <button class="btn btn-ad" onclick="showAdScreen()">Ad View 💰</button>
+            <div class="stats-container">
+                <div class="stat-box ad-box">
+                    <div class="stat-icon"><i class="fas fa-ad"></i></div>
+                    <div class="stat-value" id="adsToday">০</div>
+                    <div class="stat-label">আজকের বিজ্ঞাপন</div>
+                </div>
+                <div class="stat-box ref-box">
+                    <div class="stat-icon"><i class="fas fa-user-friends"></i></div>
+                    <div class="stat-value" id="totalRef">০</div>
+                    <div class="stat-label">মোট রেফার</div>
+                </div>
+            </div>
+            
+            <div class="referral-section">
+                <div class="referral-title"><i class="fas fa-share-alt"></i> বন্ধুকে রেফার করুন এবং আয় করুন</div>
+                <div class="referral-desc">আপনার রেফার লিংকটি শেয়ার করুন এবং আপনার বন্ধুদের আমন্ত্রণ করুন। আপনার বন্ধু সাইন আপ করলে আপনি ১৫০ টাকা বোনাস পাবেন।</div>
+                
+                <div class="referral-link-box">
+                    <div class="referral-link" id="referralLink">https://t.me/your_bot?start=ref123456</div>
+                    <button class="copy-btn" id="copyBtn">লিংক কপি করুন</button>
+                </div>
             </div>
         </div>
         
-        <!-- Result Screen -->
-        <div class="result-screen" id="resultScreen">
-            <div class="love-you-message" id="loveYouText" style="display: none;">
-                <h2 style="font-family: 'Dancing Script', cursive; font-size: 42px; font-weight: 700; color: #2c3e50; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); margin: 0; animation: pulse 2s infinite;">Love you too jann! 💞</h2>
+        <!-- টাস্ক সেকশন -->
+        <div class="task-container" id="taskSection">
+            <div class="user-info">
+                <div class="user-avatar">U</div>
+                <div class="user-details">
+                    <div class="user-name">ইউজারের নাম</div>
+                    <div>মোট টাকা: ৫০ টাকা | মোট রেফার: ০ জন</div>
+                </div>
             </div>
             
-            <div class="gif-container" id="resultGifContainer">
-                <div class="gif-decoration decoration-top-left">🎈</div>
-                <div class="gif-decoration decoration-top-right">🌼</div>
-                <div class="gif-decoration decoration-bottom-left">💖</div>
-                <div class="gif-decoration decoration-bottom-right">🎈</div>
-                <img id="resultGif" src="" alt="Result GIF" style="display: none;">
+            <div class="task-section">
+                <div class="task-title">বিজ্ঞাপন দেখুন এবং আয় করুন</div>
+                
+                <div class="ad-task-box">
+                    <div class="ad-task-title">বিজ্ঞাপন দেখুন</div>
+                    <div class="ad-task-reward">
+                        <i class="fas fa-gift"></i> রিওয়ার্ড: ২০ টাকা
+                    </div>
+                    <button class="watch-ad-btn" id="watchAdBtn">বিজ্ঞাপন দেখুন</button>
+                </div>
             </div>
             
-            <div class="love-message" id="resultMessage"></div>
+            <div class="task-section">
+                <div class="task-title">টেলিগ্রাম টাস্ক করে আয় করুন</div>
+                
+                <!-- টেলিগ্রাম চ্যানেল ১ -->
+                <div class="social-task-box">
+                    <div class="social-task-header">
+                        <div class="social-icon telegram-icon">
+                            <i class="fab fa-telegram"></i>
+                        </div>
+                        <div>
+                            <div class="social-task-title">টেলিগ্রাম চ্যানেল ১ এ যোগ দিন</div>
+                            <div class="social-task-desc">চ্যানেলে জয়েন করুন তারপর চেক ও ক্লেইম বাটনে ক্লিক করুন</div>
+                        </div>
+                    </div>
+                    <div class="social-task-reward">রিওয়ার্ড: ২০০.০০ টাকা</div>
+                    <div class="social-task-buttons">
+                        <button class="open-btn" id="openTelegram1Btn">চ্যানেল ওপেন</button>
+                        <button class="claim-btn" id="claimTelegram1Btn">চেক ও ক্লেইম</button>
+                    </div>
+                    <div class="message-box" id="telegram1Message"></div>
+                </div>
+                
+                <!-- টেলিগ্রাম চ্যানেল ২ -->
+                <div class="social-task-box">
+                    <div class="social-task-header">
+                        <div class="social-icon telegram-icon">
+                            <i class="fab fa-telegram"></i>
+                        </div>
+                        <div>
+                            <div class="social-task-title">টেলিগ্রাম চ্যানেল ২ এ যোগ দিন</div>
+                            <div class="social-task-desc">চ্যানেলে জয়েন করুন তারপর চেক ও ক্লেইম বাটনে ক্লিক করুন</div>
+                        </div>
+                    </div>
+                    <div class="social-task-reward">রিওয়ার্ড: ২০০.০০ টাকা</div>
+                    <div class="social-task-buttons">
+                        <button class="open-btn" id="openTelegram2Btn">চ্যানেল ওপেন</button>
+                        <button class="claim-btn" id="claimTelegram2Btn">চেক ও ক্লেইম</button>
+                    </div>
+                    <div class="message-box" id="telegram2Message"></div>
+                </div>
+                
+                <!-- টেলিগ্রাম চ্যানেল ৩ -->
+                <div class="social-task-box">
+                    <div class="social-task-header">
+                        <div class="social-icon telegram-icon">
+                            <i class="fab fa-telegram"></i>
+                        </div>
+                        <div>
+                            <div class="social-task-title">টেলিগ্রাম চ্যানেল ৩ এ যোগ দিন</div>
+                            <div class="social-task-desc">চ্যানেলে জয়েন করুন তারপর চেক ও ক্লেইম বাটনে ক্লিক করুন</div>
+                        </div>
+                    </div>
+                    <div class="social-task-reward">রিওয়ার্ড: ২০০.০০ টাকা</div>
+                    <div class="social-task-buttons">
+                        <button class="open-btn" id="openTelegram3Btn">চ্যানেল ওপেন</button>
+                        <button class="claim-btn" id="claimTelegram3Btn">চেক ও ক্লেইম</button>
+                    </div>
+                    <div class="message-box" id="telegram3Message"></div>
+                </div>
+                
+                <!-- টেলিগ্রাম চ্যানেল ৪ -->
+                <div class="social-task-box">
+                    <div class="social-task-header">
+                        <div class="social-icon telegram-icon">
+                            <i class="fab fa-telegram"></i>
+                        </div>
+                        <div>
+                            <div class="social-task-title">টেলিগ্রাম চ্যানেল ৪ এ যোগ দিন</div>
+                            <div class="social-task-desc">চ্যানেলে জয়েন করুন তারপর চেক ও ক্লেইম বাটনে ক্লিক করুন</div>
+                        </div>
+                    </div>
+                    <div class="social-task-reward">রিওয়ার্ড: ২০০.০০ টাকা</div>
+                    <div class="social-task-buttons">
+                        <button class="open-btn" id="openTelegram4Btn">চ্যানেল ওপেন</button>
+                        <button class="claim-btn" id="claimTelegram4Btn">চেক ও ক্লেইম</button>
+                    </div>
+                    <div class="message-box" id="telegram4Message"></div>
+                </div>
+            </div>
+            
+            <div class="task-section">
+                <div class="task-title">ইউটিউব টাস্ক করে আয় করুন</div>
+                
+                <!-- ইউটিউব টাস্ক -->
+                <div class="social-task-box">
+                    <div class="social-task-header">
+                        <div class="social-icon youtube-icon">
+                            <i class="fab fa-youtube"></i>
+                        </div>
+                        <div>
+                            <div class="social-task-title">ইউটিউব চ্যানেল সাবস্ক্রাইব করুন</div>
+                            <div class="social-task-desc">চ্যানেলে সাবস্ক্রাইব করুন তারপর চেক ও ক্লেইম বাটনে ক্লিক করুন</div>
+                        </div>
+                    </div>
+                    <div class="social-task-reward">রিওয়ার্ড: ২০০.০০ টাকা</div>
+                    <div class="social-task-buttons">
+                        <button class="open-btn" id="openYoutubeBtn">ইউটিউব ওপেন</button>
+                        <button class="claim-btn" id="claimYoutubeBtn">চেক ও ক্লেইম</button>
+                    </div>
+                    <div class="message-box" id="youtubeMessage"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- সাপোর্ট সেকশন -->
+        <div class="support-container" id="supportSection">
+            <div class="user-info">
+                <div class="user-avatar">U</div>
+                <div class="user-details">
+                    <div class="user-name">ইউজারের নাম</div>
+                    <div>মোট টাকা: ৫০ টাকা | মোট রেফার: ০ জন</div>
+                </div>
+            </div>
+            
+            <div class="tutorial-box">
+                <div class="tutorial-header">
+                    <div class="video-icon">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div>
+                        <div class="tutorial-title">টিউটোরিয়াল ভিডিও</div>
+                        <div class="tutorial-desc">কিভাবে অ্যাপটি ব্যবহার করবেন-টিউটোরিয়াল ভিডিও দেখে নিন এবং সহজেই আয় শুরু করুন।</div>
+                    </div>
+                </div>
+                <button class="tutorial-btn" id="tutorialBtn"><i class="fab fa-youtube"></i> টিউটোরিয়াল দেখুন</button>
+            </div>
+            
+            <div class="tutorial-desc" style="text-align: center; margin-top: 20px;">
+                ভিডিও দেখে সব কিছু বুঝে নিন
+            </div>
+        </div>
+        
+        <!-- উইথড্র সেকশন -->
+        <div class="withdraw-container" id="withdrawSection">
+            <div class="user-info">
+                <div class="user-avatar">U</div>
+                <div class="user-details">
+                    <div class="user-name">ইউজারের নাম</div>
+                    <div>মোট টাকা: ৫০ টাকা | মোট রেফার: ০ জন</div>
+                </div>
+            </div>
+            
+            <div class="withdraw-box">
+                <div class="withdraw-title">টাকা উত্তোলন</div>
+                
+                <div class="withdraw-notice">
+                    <div class="withdraw-notice-title">নোটিশ</div>
+                    <div class="withdraw-notice-text">টাকা উত্তোলনের জন্য আপনার একাউন্টে ১৫০০ টাকা থাকা লাগবে এবং ২০ জন রেফার থাকা লাগবে।</div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">পদ্ধতি নির্বাচন</label>
+                    <select class="form-select" id="withdrawMethod">
+                        <option value="">পদ্ধতি নির্বাচন করুন</option>
+                        <option value="bkash">বিকাশ</option>
+                        <option value="nagad">নগদ</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">একাউন্ট নম্বর</label>
+                    <input type="text" class="form-input" id="accountNumber" placeholder="আপনার একাউন্ট নম্বর দিন">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">পরিমাণ</label>
+                    <input type="number" class="form-input" id="withdrawAmount" placeholder="টাকার পরিমাণ দিন">
+                </div>
+                
+                <button class="submit-btn" id="submitWithdrawBtn">রিকোয়েস্ট জমা দিন</button>
+                
+                <div class="message-box" id="withdrawMessage"></div>
+            </div>
+        </div>
+        
+        <!-- হিস্ট্রি সেকশন -->
+        <div class="history-container" id="historySection">
+            <div class="user-info">
+                <div class="user-avatar">U</div>
+                <div class="user-details">
+                    <div class="user-name">ইউজারের নাম</div>
+                    <div>মোট টাকা: ৫০ টাকা | মোট রেফার: ০ জন</div>
+                </div>
+            </div>
+            
+            <div class="history-title">আপনার উইথড্র রেকর্ড</div>
+            
+            <div class="no-history" id="noHistoryMessage">
+                <i class="fas fa-history" style="font-size: 48px; margin-bottom: 15px; color: #ccc;"></i>
+                <p>আপনার এখনো কোন উইথড্র রেকর্ড নেই</p>
+            </div>
+            
+            <div class="admin-panel" id="adminPanel">
+                <div class="history-title">এডমিন প্যানেল - উইথড্র রিকোয়েস্ট</div>
+                
+                <div class="no-history" id="noAdminRequestMessage">
+                    <i class="fas fa-inbox" style="font-size: 48px; margin-bottom: 15px; color: #ccc;"></i>
+                    <p>কোন উইথড্র রিকোয়েস্ট নেই</p>
+                </div>
+            </div>
         </div>
     </div>
-
-    <!-- Ad Screen -->
-    <div class="ad-screen" id="adScreen">
-        <h2 style="color: #ffd93d; font-family: 'Dancing Script', cursive; font-size: 36px;">Support Us by Watching Ads</h2>
-        
-        <div class="ad-message">
-            Please watch the ad for 15 seconds to continue
-        </div>
-        
-        <div class="ad-timer" id="adTimer">
-            15 seconds remaining
-        </div>
-        
-        <div class="ad-container" id="adContainer">
-            <!-- Adsense ad will be loaded here -->
-            <div style="color: black; text-align: center; padding: 20px;">
-                Loading advertisement...
+    
+    <!-- এডমিন লগিন মডাল -->
+    <div class="admin-login-modal" id="adminLoginModal">
+        <div class="admin-login-box">
+            <!-- ক্রোস বাটন যোগ করা হয়েছে -->
+            <button class="admin-close" id="adminCloseBtn">&times;</button>
+            <div class="admin-login-title">এডমিন লগিন</div>
+            <div class="admin-login-desc">এটা শুধু মাত্র এডমিনের জন্য</div>
+            
+            <div class="form-group">
+                <label class="form-label">ইউজারনেম</label>
+                <input type="text" class="form-input" id="adminUsername" placeholder="এডমিন ইউজারনেম">
             </div>
-        </div>
-        
-        <button class="close-ad-btn" id="closeAdBtn" onclick="closeAdScreen()">
-            Continue to Site ✅
-        </button>
-    </div>
-
-    <!-- Status Check Box -->
-    <div class="status-container">
-        <div class="status-box" onclick="openStatusPage()">
-            <div class="status-title">Check Status</div>
-            <div class="status-value status-default" id="statusValue">Click to check</div>
+            
+            <div class="form-group">
+                <label class="form-label">পাসওয়ার্ড</label>
+                <input type="password" class="form-input" id="adminPassword" placeholder="এডমিন পাসওয়ার্ড">
+            </div>
+            
+            <button class="submit-btn" id="adminLoginBtn">লগিন</button>
+            
+            <div class="message-box" id="adminLoginMessage"></div>
         </div>
     </div>
-
-    <div class="roses-bg" id="rosesBg" style="display: none;"></div>
-    <div class="angry-bg" id="angryBg" style="display: none;"></div>
-
-    <!-- Adsense Script -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5761190465129752"
-     crossorigin="anonymous"></script>
+    
+    <!-- এডমিন আইকন -->
+    <div class="admin-icon" id="adminIcon">
+        <i class="fas fa-user-shield"></i>
+    </div>
+    
+    <!-- ফুটার নেভিগেশন -->
+    <div class="footer-nav">
+        <a href="#" class="nav-item" data-target="homeSection">
+            <i class="fas fa-home"></i>
+            <span>হোম</span>
+        </a>
+        <a href="#" class="nav-item" data-target="taskSection">
+            <i class="fas fa-tasks"></i>
+            <span>টাস্ক</span>
+        </a>
+        <a href="#" class="nav-item" data-target="supportSection">
+            <i class="fas fa-headset"></i>
+            <span>সাপোর্ট</span>
+        </a>
+        <a href="#" class="nav-item" data-target="withdrawSection">
+            <i class="fas fa-wallet"></i>
+            <span>উইথড্র</span>
+        </a>
+        <a href="#" class="nav-item" data-target="historySection">
+            <i class="fas fa-history"></i>
+            <span>হিস্ট্রি</span>
+        </a>
+    </div>
 
     <script>
-        // Variables to track animation intervals and user choice
-        let heartInterval, flowerInterval, leafInterval, balloonInterval, firecrackerInterval;
-        let userChoice = null;
-        let adTimerInterval;
-        let adSeconds = 15;
-
-        // Ad Screen Functions
-        function showAdScreen() {
-            document.getElementById('questionScreen').style.display = 'none';
-            document.getElementById('resultScreen').style.display = 'none';
-            document.getElementById('adScreen').style.display = 'flex';
+        // বুঝেছি বাটন ক্লিক ইভেন্ট
+        document.getElementById('understandBtn').addEventListener('click', function() {
+            document.getElementById('noticeSection').style.display = 'none';
+            document.getElementById('homeSection').style.display = 'block';
             
-            // Reset timer
-            adSeconds = 15;
-            document.getElementById('adTimer').textContent = adSeconds + ' seconds remaining';
-            document.getElementById('closeAdBtn').style.display = 'none';
-            
-            // Load Adsense ad
-            loadAdsenseAd();
-            
-            // Start timer
-            startAdTimer();
-        }
-
-        function loadAdsenseAd() {
-            const adContainer = document.getElementById('adContainer');
-            adContainer.innerHTML = `
-                <ins class="adsbygoogle"
-                    style="display:block"
-                    data-ad-client="ca-pub-5761190465129752"
-                    data-ad-slot="1234567890"
-                    data-ad-format="auto"
-                    data-full-width-responsive="true"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                <\/script>
-            `;
-        }
-
-        function startAdTimer() {
-            clearInterval(adTimerInterval);
-            
-            adTimerInterval = setInterval(() => {
-                adSeconds--;
-                document.getElementById('adTimer').textContent = adSeconds + ' seconds remaining';
-                
-                if (adSeconds <= 0) {
-                    clearInterval(adTimerInterval);
-                    document.getElementById('closeAdBtn').style.display = 'block';
-                    document.getElementById('adTimer').textContent = 'Ad completed! Click continue';
-                    document.getElementById('adTimer').style.color = '#4CAF50';
+            // হোম নেভ আইটেম সক্রিয় করুন
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-target') === 'homeSection') {
+                    item.classList.add('active');
                 }
-            }, 1000);
-        }
-
-        function closeAdScreen() {
-            clearInterval(adTimerInterval);
-            document.getElementById('adScreen').style.display = 'none';
-            document.getElementById('questionScreen').style.display = 'flex';
+            });
+        });
+        
+        // কপি বাটন ক্লিক ইভেন্ট
+        document.getElementById('copyBtn').addEventListener('click', function() {
+            const referralLink = document.getElementById('referralLink').textContent;
+            navigator.clipboard.writeText(referralLink).then(function() {
+                alert('রেফারেল লিংক কপি করা হয়েছে!');
+            });
+        });
+        
+        // টিউটোরিয়াল বাটন ক্লিক ইভেন্ট
+        document.getElementById('tutorialBtn').addEventListener('click', function() {
+            window.open('https://youtube.com', '_blank');
+        });
+        
+        // বিজ্ঞাপন দেখুন বাটন ক্লিক ইভেন্ট
+        document.getElementById('watchAdBtn').addEventListener('click', function() {
+            alert('বিজ্ঞাপন চালু হচ্ছে... (পরবর্তীতে এখানে টডস নেটওয়ার্কের কোড যুক্ত হবে)');
+        });
+        
+        // টেলিগ্রাম চ্যানেল ওপেন বাটন ফাংশন
+        function setupTelegramButtons(openBtnId, claimBtnId, messageBoxId, channelNumber) {
+            const openBtn = document.getElementById(openBtnId);
+            const claimBtn = document.getElementById(claimBtnId);
+            const messageBox = document.getElementById(messageBoxId);
             
-            // Show success message
-            alert('Thank you for watching the ad! You can now continue using the site.');
-        }
-
-        // Save choice to localStorage
-        function saveChoice(choice) {
-            userChoice = choice;
-            localStorage.setItem('loveQuestionChoice', choice);
-            localStorage.setItem('loveQuestionTimestamp', new Date().toISOString());
-        }
-
-        // Open status page in new window
-        function openStatusPage() {
-            const statusPage = window.open('', 'statusPage', 'width=400,height=300,left=100,top=100');
-            statusPage.document.write(`
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <title>Love Question Status</title>
-                    <style>
-                        body {
-                            font-family: 'Arial', sans-serif;
-                            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                            margin: 0;
-                            padding: 20px;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            min-height: 100vh;
-                            color: white;
-                        }
-                        .status-container {
-                            background: rgba(255, 255, 255, 0.95);
-                            padding: 30px;
-                            border-radius: 20px;
-                            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-                            text-align: center;
-                            max-width: 350px;
-                            color: #333;
-                        }
-                        .status-title {
-                            font-size: 24px;
-                            font-weight: bold;
-                            margin-bottom: 20px;
-                            color: #667eea;
-                        }
-                        .status-result {
-                            font-size: 32px;
-                            font-weight: bold;
-                            margin: 20px 0;
-                            padding: 15px;
-                            border-radius: 10px;
-                        }
-                        .status-yes {
-                            background: #ff6b9d;
-                            color: white;
-                            animation: pulse 2s infinite;
-                        }
-                        .status-no {
-                            background: #74b9ff;
-                            color: white;
-                            animation: shake 0.5s infinite;
-                        }
-                        .status-default {
-                            background: #95a5a6;
-                            color: white;
-                        }
-                        .timestamp {
-                            font-size: 14px;
-                            color: #666;
-                            margin-top: 15px;
-                        }
-                        @keyframes pulse {
-                            0%, 100% { transform: scale(1); }
-                            50% { transform: scale(1.05); }
-                        }
-                        @keyframes shake {
-                            0%, 100% { transform: translateX(0); }
-                            25% { transform: translateX(-5px); }
-                            75% { transform: translateX(5px); }
-                        }
-                    </style>
-                </head>
-                <body>
-                    <div class="status-container">
-                        <div class="status-title">Love Question Status</div>
-                        <div id="statusResult" class="status-result status-default">Loading...</div>
-                        <div id="timestamp" class="timestamp"></div>
-                        <button onclick="window.close()" style="margin-top: 20px; padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer;">Close</button>
-                    </div>
-                    <script>
-                        const choice = localStorage.getItem('loveQuestionChoice');
-                        const timestamp = localStorage.getItem('loveQuestionTimestamp');
-                        const statusResult = document.getElementById('statusResult');
-                        const timestampEl = document.getElementById('timestamp');
-                        
-                        if (choice === 'yes') {
-                            statusResult.textContent = '✅ YES';
-                            statusResult.className = 'status-result status-yes';
-                        } else if (choice === 'no') {
-                            statusResult.textContent = '❌ NO';
-                            statusResult.className = 'status-result status-no';
-                        } else {
-                            statusResult.textContent = 'Not answered yet';
-                            statusResult.className = 'status-result status-default';
-                        }
-                        
-                        if (timestamp) {
-                            const date = new Date(timestamp);
-                            timestampEl.textContent = 'Answered on: ' + date.toLocaleString();
-                        }
-                    <\/script>
-                </body>
-                </html>
-            `);
-            statusPage.document.close();
-        }
-
-        function createFirecrackers() {
-            const container = document.getElementById('rosesBg');
-            const firecrackers = ['🎇', '✨', '🎆', '💫', '🌟'];
+            openBtn.addEventListener('click', function() {
+                window.open(`https://t.me/channel_${channelNumber}`, '_blank');
+            });
             
-            firecrackerInterval = setInterval(() => {
-                const firecracker = document.createElement('div');
-                firecracker.className = 'firecracker';
+            claimBtn.addEventListener('click', function() {
+                const button = this;
                 
-                const x = Math.random() * 80 + 10;
-                const y = Math.random() * 80 + 10;
-                const size = Math.random() * 25 + 30;
-                const emoji = firecrackers[Math.floor(Math.random() * firecrackers.length)];
+                // চেকিং মেসেজ দেখান
+                messageBox.textContent = 'চেক করা হচ্ছে...';
+                messageBox.className = 'message-box checking-message';
+                messageBox.style.display = 'block';
                 
-                firecracker.style.setProperty('--x', x + '%');
-                firecracker.style.setProperty('--y', y + '%');
-                firecracker.style.setProperty('--size', size + 'px');
-                firecracker.textContent = emoji;
-                
-                container.appendChild(firecracker);
-                
+                // ২ সেকেন্ড পর রেজাল্ট দেখান
                 setTimeout(() => {
-                    if (firecracker.parentNode) {
-                        firecracker.parentNode.removeChild(firecracker);
-                    }
-                }, 1500);
-            }, 400);
+                    // এখানে বাস্তব চেকিং কোড যুক্ত হবে
+                    // বর্তমানে শুধু মেসেজ দেখাচ্ছে
+                    messageBox.textContent = 'চেক করা হচ্ছে... সিস্টেম প্রস্তুত';
+                    messageBox.className = 'message-box checking-message';
+                }, 2000);
+            });
         }
-
-        function createFloatingHearts() {
-            const container = document.getElementById('rosesBg');
+        
+        // ৪টি টেলিগ্রাম চ্যানেল সেটআপ
+        setupTelegramButtons('openTelegram1Btn', 'claimTelegram1Btn', 'telegram1Message', 1);
+        setupTelegramButtons('openTelegram2Btn', 'claimTelegram2Btn', 'telegram2Message', 2);
+        setupTelegramButtons('openTelegram3Btn', 'claimTelegram3Btn', 'telegram3Message', 3);
+        setupTelegramButtons('openTelegram4Btn', 'claimTelegram4Btn', 'telegram4Message', 4);
+        
+        // ইউটিউব চ্যানেল ওপেন বাটন
+        document.getElementById('openYoutubeBtn').addEventListener('click', function() {
+            window.open('https://youtube.com/c/your_channel', '_blank');
+        });
+        
+        // ইউটিউব ক্লেইম বাটন
+        document.getElementById('claimYoutubeBtn').addEventListener('click', function() {
+            const button = this;
+            const messageBox = document.getElementById('youtubeMessage');
             
-            heartInterval = setInterval(() => {
-                const heart = document.createElement('div');
-                heart.className = 'floating-heart';
-                
-                const size = Math.random() * 15 + 25;
-                heart.style.fontSize = size + 'px';
-                heart.style.left = Math.random() * 85 + '%';
-                heart.style.animationDelay = '0s';
-                heart.style.animationDuration = (Math.random() * 3 + 7) + 's';
-                heart.innerHTML = '💖';
-                
-                const letterA = document.createElement('div');
-                letterA.className = 'heart-letter left';
-                letterA.textContent = 'A';
-                letterA.style.fontSize = (size * 0.35) + 'px';
-                
-                const letterS = document.createElement('div');
-                letterS.className = 'heart-letter right';
-                letterS.textContent = 'S';
-                letterS.style.fontSize = (size * 0.35) + 'px';
-                
-                heart.appendChild(letterA);
-                heart.appendChild(letterS);
-                container.appendChild(heart);
-                
-                setTimeout(() => {
-                    if (heart.parentNode) {
-                        heart.parentNode.removeChild(heart);
-                    }
-                }, 8000);
-            }, 800);
-        }
-
-        function createFloatingFlowers() {
-            const container = document.getElementById('rosesBg');
+            // চেকিং মেসেজ দেখান
+            messageBox.textContent = 'চেক করা হচ্ছে...';
+            messageBox.className = 'message-box checking-message';
+            messageBox.style.display = 'block';
             
-            flowerInterval = setInterval(() => {
-                const flower = document.createElement('div');
-                flower.className = 'floating-flower';
-                
-                const size = Math.random() * 12 + 30;
-                flower.style.fontSize = size + 'px';
-                flower.style.left = Math.random() * 85 + '%';
-                flower.style.animationDelay = '0s';
-                flower.style.animationDuration = (Math.random() * 3 + 8) + 's';
-                flower.innerHTML = '🌼';
-                
-                container.appendChild(flower);
-                
-                setTimeout(() => {
-                    if (flower.parentNode) {
-                        flower.parentNode.removeChild(flower);
-                    }
-                }, 9000);
-            }, 600);
-            
-            leafInterval = setInterval(() => {
-                const leaf = document.createElement('div');
-                leaf.className = 'floating-leaf';
-                
-                const size = Math.random() * 12 + 25;
-                leaf.style.fontSize = size + 'px';
-                leaf.style.left = Math.random() * 85 + '%';
-                leaf.style.animationDelay = '0s';
-                leaf.style.animationDuration = (Math.random() * 3 + 9) + 's';
-                leaf.innerHTML = '🍁';
-                
-                container.appendChild(leaf);
-                
-                setTimeout(() => {
-                    if (leaf.parentNode) {
-                        leaf.parentNode.removeChild(leaf);
-                    }
-                }, 10000);
-            }, 700);
-        }
-
-        function createFloatingBalloons() {
-            const container = document.getElementById('rosesBg');
-            
-            balloonInterval = setInterval(() => {
-                const balloon = document.createElement('div');
-                balloon.className = 'floating-balloon';
-                
-                const size = Math.random() * 20 + 35;
-                balloon.style.fontSize = size + 'px';
-                balloon.style.left = Math.random() * 85 + '%';
-                balloon.style.animationDelay = '0s';
-                balloon.style.animationDuration = (Math.random() * 3 + 10) + 's';
-                balloon.innerHTML = '🎈';
-                
-                container.appendChild(balloon);
-                
-                setTimeout(() => {
-                    if (balloon.parentNode) {
-                        balloon.parentNode.removeChild(balloon);
-                    }
-                }, 11000);
-            }, 1000);
-        }
-
-        function createAngryEmojis() {
-            const container = document.getElementById('angryBg');
-            const angryEmojis = ['😠', '😡', '🤬', '💢', '👿'];
-            
-            setInterval(() => {
-                const emoji = document.createElement('div');
-                emoji.className = 'angry-emoji';
-                emoji.textContent = angryEmojis[Math.floor(Math.random() * angryEmojis.length)];
-                
-                const size = Math.random() * 15 + 30;
-                emoji.style.fontSize = size + 'px';
-                emoji.style.left = Math.random() * 85 + '%';
-                emoji.style.animationDelay = '0s';
-                emoji.style.animationDuration = (Math.random() * 3 + 7) + 's';
-                
-                container.appendChild(emoji);
-                
-                setTimeout(() => {
-                    if (emoji.parentNode) {
-                        emoji.parentNode.removeChild(emoji);
-                    }
-                }, 8000);
-            }, 500);
-        }
-
-        function stopAllAnimations() {
-            if (heartInterval) clearInterval(heartInterval);
-            if (flowerInterval) clearInterval(flowerInterval);
-            if (leafInterval) clearInterval(leafInterval);
-            if (balloonInterval) clearInterval(balloonInterval);
-            if (firecrackerInterval) clearInterval(firecrackerInterval);
-            
-            const rosesBg = document.getElementById('rosesBg');
-            if (rosesBg) {
-                rosesBg.innerHTML = '';
-            }
-        }
-
-        function handleYes() {
-            saveChoice('yes');
-            
-            document.getElementById('questionScreen').style.display = 'none';
-            document.getElementById('resultScreen').style.display = 'flex';
-            document.getElementById('rosesBg').style.display = 'block';
-            document.getElementById('loveYouText').style.display = 'block';
-            
-            stopAllAnimations();
-            createFirecrackers();
-            createFloatingHearts();
-            createFloatingFlowers();
-            createFloatingBalloons();
-            
-            const resultGif = document.getElementById('resultGif');
-            const resultMessage = document.getElementById('resultMessage');
-            
-            resultGif.src = 'https://i.postimg.cc/xCjdd1KK/3fc6dc3d-e497-46d0-a40b-e6293bb9fca9.gif';
-            resultGif.style.display = 'block';
-            resultMessage.textContent = 'Yay! 🎉';
-            
+            // ২ সেকেন্ড পর রেজাল্ট দেখান
             setTimeout(() => {
-                resultGif.src = 'https://i.postimg.cc/zGBZ3HQ2/Mochi-Mochi-Peach-Cat-GIFs-Tenor.gif';
-                resultMessage.textContent = 'Forever and Always! 💕';
+                // এখানে বাস্তব চেকিং কোড যুক্ত হবে
+                // বর্তমানে শুধু মেসেজ দেখাচ্ছে
+                messageBox.textContent = 'চেক করা হচ্ছে... সিস্টেম প্রস্তুত';
+                messageBox.className = 'message-box checking-message';
             }, 2000);
-        }
-
-        function handleNo() {
-            saveChoice('no');
+        });
+        
+        // উইথড্র রিকোয়েস্ট জমা দিন
+        document.getElementById('submitWithdrawBtn').addEventListener('click', function() {
+            const method = document.getElementById('withdrawMethod').value;
+            const accountNumber = document.getElementById('accountNumber').value;
+            const amount = document.getElementById('withdrawAmount').value;
+            const messageBox = document.getElementById('withdrawMessage');
             
-            document.getElementById('questionScreen').style.display = 'none';
-            document.getElementById('resultScreen').style.display = 'flex';
-            document.getElementById('angryBg').style.display = 'block';
-            document.body.style.background = 'linear-gradient(135deg, #ff6b6b 0%, #ee5a52 50%, #ff4757 100%)';
+            // ভ্যালিডেশন
+            if (!method) {
+                messageBox.textContent = 'দয়া করে পদ্ধতি নির্বাচন করুন।';
+                messageBox.className = 'message-box error-message';
+                messageBox.style.display = 'block';
+                return;
+            }
             
-            stopAllAnimations();
-            createAngryEmojis();
+            if (!accountNumber) {
+                messageBox.textContent = 'দয়া করে একাউন্ট নম্বর দিন।';
+                messageBox.className = 'message-box error-message';
+                messageBox.style.display = 'block';
+                return;
+            }
             
-            const resultGif = document.getElementById('resultGif');
-            const resultMessage = document.getElementById('resultMessage');
+            if (!amount || amount <= 0) {
+                messageBox.textContent = 'দয়া করে সঠিক পরিমাণ দিন।';
+                messageBox.className = 'message-box error-message';
+                messageBox.style.display = 'block';
+                return;
+            }
             
-            resultGif.src = 'https://i.postimg.cc/bNy4F2qg/Kick-GIF-Kick-Discover-Share-GIFs.gif';
-            resultGif.style.display = 'block';
-            resultMessage.textContent = 'Ouch! That hurts! 😢';
-            resultMessage.style.color = '#fff';
-        }
+            // এখানে বাস্তব ব্যাকেন্ড চেকিং কোড যুক্ত হবে
+            messageBox.textContent = 'আপনার রিকোয়েস্ট প্রসেস করা হচ্ছে...';
+            messageBox.className = 'message-box checking-message';
+            messageBox.style.display = 'block';
+            
+            // ফর্ম রিসেট
+            document.getElementById('withdrawMethod').value = '';
+            document.getElementById('accountNumber').value = '';
+            document.getElementById('withdrawAmount').value = '';
+        });
+        
+        // এডমিন লগিন মডাল বন্ধ
+        document.getElementById('adminCloseBtn').addEventListener('click', function() {
+            document.getElementById('adminLoginModal').style.display = 'none';
+        });
+        
+        // এডমিন লগিন
+        document.getElementById('adminLoginBtn').addEventListener('click', function() {
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+            const messageBox = document.getElementById('adminLoginMessage');
+            
+            // এখানে বাস্তব এডমিন ভেরিফিকেশন কোড যুক্ত হবে
+            if (username && password) {
+                document.getElementById('adminLoginModal').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+                messageBox.style.display = 'none';
+                
+                // এডমিন ইউজারনেম ও পাসওয়ার্ড ক্লিয়ার
+                document.getElementById('adminUsername').value = '';
+                document.getElementById('adminPassword').value = '';
+            } else {
+                messageBox.textContent = 'ইউজারনেম ও পাসওয়ার্ড দিন!';
+                messageBox.className = 'message-box error-message';
+                messageBox.style.display = 'block';
+            }
+        });
+        
+        // নেভিগেশন ইভেন্ট
+        const navItems = document.querySelectorAll('.nav-item');
+        
+        navItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // সক্রিয় নেভ আইটেম আপডেট
+                navItems.forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+                
+                // সেকশন দেখানো/লুকানো
+                const targetId = this.getAttribute('data-target');
+                if (targetId) {
+                    document.getElementById('noticeSection').style.display = 'none';
+                    document.getElementById('homeSection').style.display = 'none';
+                    document.getElementById('taskSection').style.display = 'none';
+                    document.getElementById('supportSection').style.display = 'none';
+                    document.getElementById('withdrawSection').style.display = 'none';
+                    document.getElementById('historySection').style.display = 'none';
+                    
+                    document.getElementById(targetId).style.display = 'block';
+                    
+                    // হিস্ট্রি সেকশনে এডমিন আইকন দেখান
+                    if (targetId === 'historySection') {
+                        document.getElementById('adminIcon').style.display = 'flex';
+                        isHistoryActive = true;
+                    } else {
+                        document.getElementById('adminIcon').style.display = 'none';
+                        isHistoryActive = false;
+                    }
+                }
+            });
+        });
+        
+        // এডমিন আইকন ক্লিক
+        document.getElementById('adminIcon').addEventListener('click', function() {
+            if (isHistoryActive) {
+                document.getElementById('adminLoginModal').style.display = 'flex';
+            }
+        });
+        
+        // হিস্ট্রি সেকশন সক্রিয়তা ট্র্যাকিং
+        let isHistoryActive = false;
     </script>
 </body>
-</html>
+    </html>
