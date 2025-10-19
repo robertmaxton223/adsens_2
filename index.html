@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>আয় করুন - Telegram ওয়েব অ্যাপ</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
             --primary: #0088cc;
@@ -152,6 +153,13 @@
             font-size: 24px;
             font-weight: bold;
             margin-right: 15px;
+            overflow: hidden;
+        }
+        
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         
         .user-details {
@@ -162,6 +170,12 @@
             font-size: 18px;
             font-weight: 700;
             margin-bottom: 5px;
+        }
+        
+        .user-username {
+            font-size: 14px;
+            color: var(--primary);
+            font-weight: 600;
         }
         
         .balance {
@@ -1134,15 +1148,17 @@
         <!-- হোম সেকশন -->
         <div class="home-container" id="homeSection">
             <div class="user-info">
-                <div class="user-avatar">U</div>
+                <div class="user-avatar" id="userAvatar">
+                    <!-- প্রোফাইল পিক এখানে লোড হবে -->
+                </div>
                 <div class="user-details">
-                    <div class="user-name">ইউজারের নাম</div>
-                    <div>Telegram একাউন্ট</div>
+                    <div class="user-name" id="userName">লোড হচ্ছে...</div>
+                    <div class="user-username" id="userUsername">লোড হচ্ছে...</div>
                 </div>
             </div>
             
             <div class="balance">
-                মোট আয়: ৫০ টাকা
+                মোট আয়: <span id="totalBalance">০</span> টাকা
             </div>
             
             <div class="stats-container">
@@ -1163,7 +1179,7 @@
                 <div class="referral-desc">আপনার রেফার লিংকটি শেয়ার করুন এবং আপনার বন্ধুদের আমন্ত্রণ করুন। আপনার বন্ধু সাইন আপ করলে আপনি ১৫০ টাকা বোনাস পাবেন।</div>
                 
                 <div class="referral-link-box">
-                    <div class="referral-link" id="referralLink">https://t.me/your_bot?start=ref123456</div>
+                    <div class="referral-link" id="referralLink">লোড হচ্ছে...</div>
                     <button class="copy-btn" id="copyBtn">লিংক কপি করুন</button>
                 </div>
             </div>
@@ -1172,10 +1188,12 @@
         <!-- টাস্ক সেকশন -->
         <div class="task-container" id="taskSection">
             <div class="user-info">
-                <div class="user-avatar">U</div>
+                <div class="user-avatar" id="taskUserAvatar">
+                    <!-- প্রোফাইল পিক এখানে লোড হবে -->
+                </div>
                 <div class="user-details">
-                    <div class="user-name">ইউজারের নাম</div>
-                    <div>মোট টাকা: ৫০ টাকা | মোট রেফার: ০ জন</div>
+                    <div class="user-name" id="taskUserName">লোড হচ্ছে...</div>
+                    <div>মোট টাকা: <span id="taskBalance">০</span> টাকা | মোট রেফার: <span id="taskRefCount">০</span> জন</div>
                 </div>
             </div>
             
@@ -1298,10 +1316,12 @@
         <!-- সাপোর্ট সেকশন -->
         <div class="support-container" id="supportSection">
             <div class="user-info">
-                <div class="user-avatar">U</div>
+                <div class="user-avatar" id="supportUserAvatar">
+                    <!-- প্রোফাইল পিক এখানে লোড হবে -->
+                </div>
                 <div class="user-details">
-                    <div class="user-name">ইউজারের নাম</div>
-                    <div>মোট টাকা: ৫০ টাকা | মোট রেফার: ০ জন</div>
+                    <div class="user-name" id="supportUserName">লোড হচ্ছে...</div>
+                    <div>মোট টাকা: <span id="supportBalance">০</span> টাকা | মোট রেফার: <span id="supportRefCount">০</span> জন</div>
                 </div>
             </div>
             
@@ -1326,10 +1346,12 @@
         <!-- উইথড্র সেকশন -->
         <div class="withdraw-container" id="withdrawSection">
             <div class="user-info">
-                <div class="user-avatar">U</div>
+                <div class="user-avatar" id="withdrawUserAvatar">
+                    <!-- প্রোফাইল পিক এখানে লোড হবে -->
+                </div>
                 <div class="user-details">
-                    <div class="user-name">ইউজারের নাম</div>
-                    <div>মোট টাকা: ৫০ টাকা | মোট রেফার: ০ জন</div>
+                    <div class="user-name" id="withdrawUserName">লোড হচ্ছে...</div>
+                    <div>মোট টাকা: <span id="withdrawBalance">০</span> টাকা | মোট রেফার: <span id="withdrawRefCount">০</span> জন</div>
                 </div>
             </div>
             
@@ -1369,10 +1391,12 @@
         <!-- হিস্ট্রি সেকশন -->
         <div class="history-container" id="historySection">
             <div class="user-info">
-                <div class="user-avatar">U</div>
+                <div class="user-avatar" id="historyUserAvatar">
+                    <!-- প্রোফাইল পিক এখানে লোড হবে -->
+                </div>
                 <div class="user-details">
-                    <div class="user-name">ইউজারের নাম</div>
-                    <div>মোট টাকা: ৫০ টাকা | মোট রেফার: ০ জন</div>
+                    <div class="user-name" id="historyUserName">লোড হচ্ছে...</div>
+                    <div>মোট টাকা: <span id="historyBalance">০</span> টাকা | মোট রেফার: <span id="historyRefCount">০</span> জন</div>
                 </div>
             </div>
             
@@ -1448,50 +1472,204 @@
     </div>
 
     <script>
-        // বুঝেছি বাটন ক্লিক ইভেন্ট
-        document.getElementById('understandBtn').addEventListener('click', function() {
-            document.getElementById('noticeSection').style.display = 'none';
-            document.getElementById('homeSection').style.display = 'block';
+        // Telegram Web App ইনিশিয়ালাইজেশন
+        let tg = window.Telegram.WebApp;
+        
+        // ইউজার ডেটা
+        let userData = {
+            id: null,
+            firstName: "",
+            lastName: "",
+            username: "",
+            photoUrl: null,
+            balance: 0,
+            referralCount: 0,
+            referralCode: null
+        };
+        
+        // Telegram Web App রেডি হলে ইউজার ডেটা লোড করুন
+        tg.ready();
+        
+        // Telegram থেকে ইউজার ডেটা পাওয়া গেলে
+        if (tg.initDataUnsafe.user) {
+            const tgUser = tg.initDataUnsafe.user;
+            userData.id = tgUser.id;
+            userData.firstName = tgUser.first_name || "";
+            userData.lastName = tgUser.last_name || "";
+            userData.username = tgUser.username ? `@${tgUser.username}` : "";
+            userData.photoUrl = tgUser.photo_url || null;
             
-            // হোম নেভ আইটেম সক্রিয় করুন
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-                if (item.getAttribute('data-target') === 'homeSection') {
-                    item.classList.add('active');
+            // ইউনিক রেফারেল কোড তৈরি করুন
+            userData.referralCode = `ref_${tgUser.id}_${Math.random().toString(36).substr(2, 9)}`;
+            
+            // ডিফল্ট ডেটা সেট করুন
+            userData.balance = 50; // জয়েন বোনাস
+            userData.referralCount = 0; // শুরুতে রেফার সংখ্যা শূন্য
+        }
+        
+        // ইউজার ইন্টারফেস আপডেট ফাংশন
+        function updateUserInterface() {
+            // প্রোফাইল পিক
+            const avatarElements = document.querySelectorAll('.user-avatar');
+            avatarElements.forEach(avatar => {
+                if (userData.photoUrl) {
+                    avatar.innerHTML = `<img src="${userData.photoUrl}" alt="Profile">`;
+                } else {
+                    const initials = userData.firstName ? userData.firstName.charAt(0).toUpperCase() : 'U';
+                    avatar.innerHTML = initials;
+                    avatar.style.background = 'linear-gradient(to right, var(--primary), var(--secondary))';
                 }
             });
-        });
-        
-        // কপি বাটন ক্লিক ইভেন্ট
-        document.getElementById('copyBtn').addEventListener('click', function() {
-            const referralLink = document.getElementById('referralLink').textContent;
-            navigator.clipboard.writeText(referralLink).then(function() {
-                alert('রেফারেল লিংক কপি করা হয়েছে!');
-            });
-        });
-        
-        // টিউটোরিয়াল বাটন ক্লিক ইভেন্ট
-        document.getElementById('tutorialBtn').addEventListener('click', function() {
-            window.open('https://youtube.com', '_blank');
-        });
-        
-        // বিজ্ঞাপন দেখুন বাটন ক্লিক ইভেন্ট
-        document.getElementById('watchAdBtn').addEventListener('click', function() {
-            alert('বিজ্ঞাপন চালু হচ্ছে... (পরবর্তীতে এখানে টডস নেটওয়ার্কের কোড যুক্ত হবে)');
-        });
-        
-        // টেলিগ্রাম চ্যানেল ওপেন বাটন ফাংশন
-        function setupTelegramButtons(openBtnId, claimBtnId, messageBoxId, channelNumber) {
-            const openBtn = document.getElementById(openBtnId);
-            const claimBtn = document.getElementById(claimBtnId);
-            const messageBox = document.getElementById(messageBoxId);
             
-            openBtn.addEventListener('click', function() {
-                window.open(`https://t.me/channel_${channelNumber}`, '_blank');
+            // ইউজার নাম
+            const userName = userData.firstName + (userData.lastName ? ' ' + userData.lastName : '');
+            document.getElementById('userName').textContent = userName || 'লোড হচ্ছে...';
+            document.getElementById('taskUserName').textContent = userName || 'লোড হচ্ছে...';
+            document.getElementById('supportUserName').textContent = userName || 'লোড হচ্ছে...';
+            document.getElementById('withdrawUserName').textContent = userName || 'লোড হচ্ছে...';
+            document.getElementById('historyUserName').textContent = userName || 'লোড হচ্ছে...';
+            
+            // ইউজারনেম
+            document.getElementById('userUsername').textContent = userData.username || 'লোড হচ্ছে...';
+            
+            // ব্যালেন্স
+            document.getElementById('totalBalance').textContent = userData.balance;
+            document.getElementById('taskBalance').textContent = userData.balance;
+            document.getElementById('supportBalance').textContent = userData.balance;
+            document.getElementById('withdrawBalance').textContent = userData.balance;
+            document.getElementById('historyBalance').textContent = userData.balance;
+            
+            // রেফারেল সংখ্যা
+            document.getElementById('totalRef').textContent = userData.referralCount;
+            document.getElementById('taskRefCount').textContent = userData.referralCount;
+            document.getElementById('supportRefCount').textContent = userData.referralCount;
+            document.getElementById('withdrawRefCount').textContent = userData.referralCount;
+            document.getElementById('historyRefCount').textContent = userData.referralCount;
+            
+            // রেফারেল লিংক
+            if (userData.referralCode) {
+                const referralLink = `https://t.me/your_bot?start=${userData.referralCode}`;
+                document.getElementById('referralLink').textContent = referralLink;
+            } else {
+                document.getElementById('referralLink').textContent = 'লোড হচ্ছে...';
+            }
+        }
+        
+        // রেফারেল সিস্টেম
+        function checkForReferral() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const startParam = urlParams.get('start');
+            
+            if (startParam && startParam.startsWith('ref_')) {
+                // রেফারেল লিংক থেকে এসেছে
+                const referredBy = startParam.split('_')[1]; // রেফারকারীর আইডি
+                
+                // রেফারেল বোনাস যোগ করুন
+                userData.balance += 150;
+                
+                // রেফারেল সংখ্যা আপডেট করুন
+                userData.referralCount++;
+                
+                // UI আপডেট করুন
+                updateUserInterface();
+                
+                // সফলতা মেসেজ দেখান
+                alert('রেফারেল বোনাস! আপনার অ্যাকাউন্টে ১৫০ টাকা যোগ করা হয়েছে।');
+            }
+        }
+        
+        // অ্যাপ্লিকেশন ইনিশিয়ালাইজেশন
+        document.addEventListener('DOMContentLoaded', function() {
+            // ইউজার ইন্টারফেস আপডেট করুন
+            updateUserInterface();
+            
+            // রেফারেল চেক করুন
+            checkForReferral();
+            
+            // বুঝেছি বাটন ক্লিক ইভেন্ট
+            document.getElementById('understandBtn').addEventListener('click', function() {
+                document.getElementById('noticeSection').style.display = 'none';
+                document.getElementById('homeSection').style.display = 'block';
+                
+                // হোম নেভ আইটেম সক্রিয় করুন
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('data-target') === 'homeSection') {
+                        item.classList.add('active');
+                    }
+                });
             });
             
-            claimBtn.addEventListener('click', function() {
+            // কপি বাটন ক্লিক ইভেন্ট
+            document.getElementById('copyBtn').addEventListener('click', function() {
+                const referralLink = document.getElementById('referralLink').textContent;
+                if (referralLink !== 'লোড হচ্ছে...') {
+                    navigator.clipboard.writeText(referralLink).then(function() {
+                        alert('রেফারেল লিংক কপি করা হয়েছে!');
+                    });
+                }
+            });
+            
+            // টিউটোরিয়াল বাটন ক্লিক ইভেন্ট
+            document.getElementById('tutorialBtn').addEventListener('click', function() {
+                window.open('https://youtube.com', '_blank');
+            });
+            
+            // বিজ্ঞাপন দেখুন বাটন ক্লিক ইভেন্ট
+            document.getElementById('watchAdBtn').addEventListener('click', function() {
+                alert('বিজ্ঞাপন চালু হচ্ছে...');
+                
+                // বিজ্ঞাপন দেখার পর রিওয়ার্ড যোগ করুন
+                userData.balance += 20;
+                updateUserInterface();
+                
+                // আজকের বিজ্ঞাপন সংখ্যা আপডেট করুন
+                const adsToday = document.getElementById('adsToday');
+                adsToday.textContent = parseInt(adsToday.textContent) + 1;
+            });
+            
+            // টেলিগ্রাম চ্যানেল ওপেন বাটন ফাংশন
+            function setupTelegramButtons(openBtnId, claimBtnId, messageBoxId, channelNumber) {
+                const openBtn = document.getElementById(openBtnId);
+                const claimBtn = document.getElementById(claimBtnId);
+                const messageBox = document.getElementById(messageBoxId);
+                
+                openBtn.addEventListener('click', function() {
+                    window.open(`https://t.me/channel_${channelNumber}`, '_blank');
+                });
+                
+                claimBtn.addEventListener('click', function() {
+                    const button = this;
+                    
+                    // চেকিং মেসেজ দেখান
+                    messageBox.textContent = 'চেক করা হচ্ছে...';
+                    messageBox.className = 'message-box checking-message';
+                    messageBox.style.display = 'block';
+                    
+                    // ২ সেকেন্ড পর রেজাল্ট দেখান
+                    setTimeout(() => {
+                        // এখানে বাস্তব চেকিং কোড যুক্ত হবে
+                        messageBox.textContent = 'চেক করা হচ্ছে... সিস্টেম প্রস্তুত';
+                        messageBox.className = 'message-box checking-message';
+                    }, 2000);
+                });
+            }
+            
+            // ৪টি টেলিগ্রাম চ্যানেল সেটআপ
+            setupTelegramButtons('openTelegram1Btn', 'claimTelegram1Btn', 'telegram1Message', 1);
+            setupTelegramButtons('openTelegram2Btn', 'claimTelegram2Btn', 'telegram2Message', 2);
+            setupTelegramButtons('openTelegram3Btn', 'claimTelegram3Btn', 'telegram3Message', 3);
+            setupTelegramButtons('openTelegram4Btn', 'claimTelegram4Btn', 'telegram4Message', 4);
+            
+            // ইউটিউব চ্যানেল ওপেন বাটন
+            document.getElementById('openYoutubeBtn').addEventListener('click', function() {
+                window.open('https://youtube.com/c/your_channel', '_blank');
+            });
+            
+            // ইউটিউব ক্লেইম বাটন
+            document.getElementById('claimYoutubeBtn').addEventListener('click', function() {
                 const button = this;
+                const messageBox = document.getElementById('youtubeMessage');
                 
                 // চেকিং মেসেজ দেখান
                 messageBox.textContent = 'চেক করা হচ্ছে...';
@@ -1501,154 +1679,123 @@
                 // ২ সেকেন্ড পর রেজাল্ট দেখান
                 setTimeout(() => {
                     // এখানে বাস্তব চেকিং কোড যুক্ত হবে
-                    // বর্তমানে শুধু মেসেজ দেখাচ্ছে
                     messageBox.textContent = 'চেক করা হচ্ছে... সিস্টেম প্রস্তুত';
                     messageBox.className = 'message-box checking-message';
                 }, 2000);
             });
-        }
-        
-        // ৪টি টেলিগ্রাম চ্যানেল সেটআপ
-        setupTelegramButtons('openTelegram1Btn', 'claimTelegram1Btn', 'telegram1Message', 1);
-        setupTelegramButtons('openTelegram2Btn', 'claimTelegram2Btn', 'telegram2Message', 2);
-        setupTelegramButtons('openTelegram3Btn', 'claimTelegram3Btn', 'telegram3Message', 3);
-        setupTelegramButtons('openTelegram4Btn', 'claimTelegram4Btn', 'telegram4Message', 4);
-        
-        // ইউটিউব চ্যানেল ওপেন বাটন
-        document.getElementById('openYoutubeBtn').addEventListener('click', function() {
-            window.open('https://youtube.com/c/your_channel', '_blank');
-        });
-        
-        // ইউটিউব ক্লেইম বাটন
-        document.getElementById('claimYoutubeBtn').addEventListener('click', function() {
-            const button = this;
-            const messageBox = document.getElementById('youtubeMessage');
             
-            // চেকিং মেসেজ দেখান
-            messageBox.textContent = 'চেক করা হচ্ছে...';
-            messageBox.className = 'message-box checking-message';
-            messageBox.style.display = 'block';
-            
-            // ২ সেকেন্ড পর রেজাল্ট দেখান
-            setTimeout(() => {
-                // এখানে বাস্তব চেকিং কোড যুক্ত হবে
-                // বর্তমানে শুধু মেসেজ দেখাচ্ছে
-                messageBox.textContent = 'চেক করা হচ্ছে... সিস্টেম প্রস্তুত';
+            // উইথড্র রিকোয়েস্ট জমা দিন
+            document.getElementById('submitWithdrawBtn').addEventListener('click', function() {
+                const method = document.getElementById('withdrawMethod').value;
+                const accountNumber = document.getElementById('accountNumber').value;
+                const amount = document.getElementById('withdrawAmount').value;
+                const messageBox = document.getElementById('withdrawMessage');
+                
+                // ভ্যালিডেশন
+                if (!method) {
+                    messageBox.textContent = 'দয়া করে পদ্ধতি নির্বাচন করুন।';
+                    messageBox.className = 'message-box error-message';
+                    messageBox.style.display = 'block';
+                    return;
+                }
+                
+                if (!accountNumber) {
+                    messageBox.textContent = 'দয়া করে একাউন্ট নম্বর দিন।';
+                    messageBox.className = 'message-box error-message';
+                    messageBox.style.display = 'block';
+                    return;
+                }
+                
+                if (!amount || amount <= 0) {
+                    messageBox.textContent = 'দয়া করে সঠিক পরিমাণ দিন।';
+                    messageBox.className = 'message-box error-message';
+                    messageBox.style.display = 'block';
+                    return;
+                }
+                
+                // এখানে বাস্তব ব্যাকেন্ড চেকিং কোড যুক্ত হবে
+                messageBox.textContent = 'আপনার রিকোয়েস্ট প্রসেস করা হচ্ছে...';
                 messageBox.className = 'message-box checking-message';
-            }, 2000);
-        });
-        
-        // উইথড্র রিকোয়েস্ট জমা দিন
-        document.getElementById('submitWithdrawBtn').addEventListener('click', function() {
-            const method = document.getElementById('withdrawMethod').value;
-            const accountNumber = document.getElementById('accountNumber').value;
-            const amount = document.getElementById('withdrawAmount').value;
-            const messageBox = document.getElementById('withdrawMessage');
-            
-            // ভ্যালিডেশন
-            if (!method) {
-                messageBox.textContent = 'দয়া করে পদ্ধতি নির্বাচন করুন।';
-                messageBox.className = 'message-box error-message';
                 messageBox.style.display = 'block';
-                return;
-            }
+                
+                // ফর্ম রিসেট
+                document.getElementById('withdrawMethod').value = '';
+                document.getElementById('accountNumber').value = '';
+                document.getElementById('withdrawAmount').value = '';
+            });
             
-            if (!accountNumber) {
-                messageBox.textContent = 'দয়া করে একাউন্ট নম্বর দিন।';
-                messageBox.className = 'message-box error-message';
-                messageBox.style.display = 'block';
-                return;
-            }
-            
-            if (!amount || amount <= 0) {
-                messageBox.textContent = 'দয়া করে সঠিক পরিমাণ দিন।';
-                messageBox.className = 'message-box error-message';
-                messageBox.style.display = 'block';
-                return;
-            }
-            
-            // এখানে বাস্তব ব্যাকেন্ড চেকিং কোড যুক্ত হবে
-            messageBox.textContent = 'আপনার রিকোয়েস্ট প্রসেস করা হচ্ছে...';
-            messageBox.className = 'message-box checking-message';
-            messageBox.style.display = 'block';
-            
-            // ফর্ম রিসেট
-            document.getElementById('withdrawMethod').value = '';
-            document.getElementById('accountNumber').value = '';
-            document.getElementById('withdrawAmount').value = '';
-        });
-        
-        // এডমিন লগিন মডাল বন্ধ
-        document.getElementById('adminCloseBtn').addEventListener('click', function() {
-            document.getElementById('adminLoginModal').style.display = 'none';
-        });
-        
-        // এডমিন লগিন
-        document.getElementById('adminLoginBtn').addEventListener('click', function() {
-            const username = document.getElementById('adminUsername').value;
-            const password = document.getElementById('adminPassword').value;
-            const messageBox = document.getElementById('adminLoginMessage');
-            
-            // এখানে বাস্তব এডমিন ভেরিফিকেশন কোড যুক্ত হবে
-            if (username && password) {
+            // এডমিন লগিন মডাল বন্ধ
+            document.getElementById('adminCloseBtn').addEventListener('click', function() {
                 document.getElementById('adminLoginModal').style.display = 'none';
-                document.getElementById('adminPanel').style.display = 'block';
-                messageBox.style.display = 'none';
+            });
+            
+            // এডমিন লগিন
+            document.getElementById('adminLoginBtn').addEventListener('click', function() {
+                const username = document.getElementById('adminUsername').value;
+                const password = document.getElementById('adminPassword').value;
+                const messageBox = document.getElementById('adminLoginMessage');
                 
-                // এডমিন ইউজারনেম ও পাসওয়ার্ড ক্লিয়ার
-                document.getElementById('adminUsername').value = '';
-                document.getElementById('adminPassword').value = '';
-            } else {
-                messageBox.textContent = 'ইউজারনেম ও পাসওয়ার্ড দিন!';
-                messageBox.className = 'message-box error-message';
-                messageBox.style.display = 'block';
-            }
-        });
-        
-        // নেভিগেশন ইভেন্ট
-        const navItems = document.querySelectorAll('.nav-item');
-        
-        navItems.forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // সক্রিয় নেভ আইটেম আপডেট
-                navItems.forEach(nav => nav.classList.remove('active'));
-                this.classList.add('active');
-                
-                // সেকশন দেখানো/লুকানো
-                const targetId = this.getAttribute('data-target');
-                if (targetId) {
-                    document.getElementById('noticeSection').style.display = 'none';
-                    document.getElementById('homeSection').style.display = 'none';
-                    document.getElementById('taskSection').style.display = 'none';
-                    document.getElementById('supportSection').style.display = 'none';
-                    document.getElementById('withdrawSection').style.display = 'none';
-                    document.getElementById('historySection').style.display = 'none';
+                // এখানে বাস্তব এডমিন ভেরিফিকেশন কোড যুক্ত হবে
+                if (username && password) {
+                    document.getElementById('adminLoginModal').style.display = 'none';
+                    document.getElementById('adminPanel').style.display = 'block';
+                    messageBox.style.display = 'none';
                     
-                    document.getElementById(targetId).style.display = 'block';
-                    
-                    // হিস্ট্রি সেকশনে এডমিন আইকন দেখান
-                    if (targetId === 'historySection') {
-                        document.getElementById('adminIcon').style.display = 'flex';
-                        isHistoryActive = true;
-                    } else {
-                        document.getElementById('adminIcon').style.display = 'none';
-                        isHistoryActive = false;
-                    }
+                    // এডমিন ইউজারনেম ও পাসওয়ার্ড ক্লিয়ার
+                    document.getElementById('adminUsername').value = '';
+                    document.getElementById('adminPassword').value = '';
+                } else {
+                    messageBox.textContent = 'ইউজারনেম ও পাসওয়ার্ড দিন!';
+                    messageBox.className = 'message-box error-message';
+                    messageBox.style.display = 'block';
                 }
             });
+            
+            // নেভিগেশন ইভেন্ট
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // সক্রিয় নেভ আইটেম আপডেট
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // সেকশন দেখানো/লুকানো
+                    const targetId = this.getAttribute('data-target');
+                    if (targetId) {
+                        document.getElementById('noticeSection').style.display = 'none';
+                        document.getElementById('homeSection').style.display = 'none';
+                        document.getElementById('taskSection').style.display = 'none';
+                        document.getElementById('supportSection').style.display = 'none';
+                        document.getElementById('withdrawSection').style.display = 'none';
+                        document.getElementById('historySection').style.display = 'none';
+                        
+                        document.getElementById(targetId).style.display = 'block';
+                        
+                        // হিস্ট্রি সেকশনে এডমিন আইকন দেখান
+                        if (targetId === 'historySection') {
+                            document.getElementById('adminIcon').style.display = 'flex';
+                            isHistoryActive = true;
+                        } else {
+                            document.getElementById('adminIcon').style.display = 'none';
+                            isHistoryActive = false;
+                        }
+                    }
+                });
+            });
+            
+            // এডমিন আইকন ক্লিক
+            document.getElementById('adminIcon').addEventListener('click', function() {
+                if (isHistoryActive) {
+                    document.getElementById('adminLoginModal').style.display = 'flex';
+                }
+            });
+            
+            // হিস্ট্রি সেকশন সক্রিয়তা ট্র্যাকিং
+            let isHistoryActive = false;
         });
-        
-        // এডমিন আইকন ক্লিক
-        document.getElementById('adminIcon').addEventListener('click', function() {
-            if (isHistoryActive) {
-                document.getElementById('adminLoginModal').style.display = 'flex';
-            }
-        });
-        
-        // হিস্ট্রি সেকশন সক্রিয়তা ট্র্যাকিং
-        let isHistoryActive = false;
     </script>
 </body>
-    </html>
+</html>
